@@ -402,7 +402,7 @@
           }
 
           .main-footer {
-               background-color: #e6e0d7;
+               background-color: #dfd8cd;
           }
 
           .social-section {
@@ -424,7 +424,7 @@
           }
 
           .social-icon {
-               background-color: #ffffff;
+               background-color: #fff;
                color: #a27246;
                width: 40px;
                height: 40px;
@@ -432,8 +432,15 @@
                display: flex;
                align-items: center;
                justify-content: center;
-               font-size: 1.2rem;
+               font-size: 1.3rem;
                text-decoration: none;
+               transition: all 0.3s ease;
+          }
+
+          .social-icon:hover {
+               transform: translateY(-5px);
+               background-color: whitesmoke;
+               color: #4a332f;
           }
 
           .main-footer {
@@ -475,7 +482,6 @@
           .footer-links {
                text-align: right;
           }
-
 
           .footer-link {
                display: block;
@@ -605,12 +611,16 @@
 
                .main-footer {
                     flex-direction: column;
-                    gap: 30px;
                     text-align: center;
+                    padding: 20px;
                }
 
-               .company-info,
                .footer-links {
+                    text-align: center;
+                    margin-top: 15px;
+               }
+
+               .company-info {
                     text-align: center;
                }
 
@@ -631,6 +641,16 @@
 
                .newsletter-section {
                     padding: 40px 15px;
+               }
+
+               .social-section {
+                    padding: 15px 10px;
+               }
+
+               .social-icons {
+                    flex-wrap: wrap;
+                    gap: 10px;
+                    justify-content: center;
                }
           }
 
@@ -839,11 +859,11 @@
                     <div class="company-copyright">COPYRIGHT 2025 © LOTUS COFFEE</div>
                </div>
                <div class="footer-links">
-                    <a href="#" class="footer-link">Privacy Policy</a>
-                    <a href="#" class="footer-link">Terms & Conditions</a>
-                    <a href="#" class="footer-link">Customer Support</a>
-                    <a href="#" class="footer-link">Refund Policy</a>
-                    <a href="#" class="footer-link">FAQS</a>
+                    <a href="terms.html" class="footer-link">Privacy Policy</a>
+                    <a href="terms.html" class="footer-link">Terms & Conditions</a>
+                    <a href="terms.html" class="footer-link">Customer Support</a>
+                    <a href="return.html" class="footer-link">Refund Policy</a>
+                    <a href="faq.html" class="footer-link">FAQS</a>
                </div>
           </div>
      </div>
