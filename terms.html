@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Terms & Conditions - Lotus Coffee</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f5f1ea; /* light beige */
+      color: #5c3a21; /* dark brown */
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    header {
+      background-color: #8b5e3c; /* medium brown */
+      color: white;
+      padding: 1rem 1.5rem;
+      font-size: 1.8rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      position: sticky;
+      top: 0;
+      z-index: 1501;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    header .hamburger {
+      font-size: 1.8rem;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: white;
+      display: block;
+    }
+    header .header-title {
+      flex-grow: 1;
+      text-align: center;
+      user-select: none;
+    }
+    /* Sidebar */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -280px;
+      width: 280px;
+      height: 100%;
+      background-color: #d2b48c; /* tan */
+      padding: 2rem 1.5rem;
+      box-shadow: 2px 0 8px rgba(139, 94, 60, 0.3);
+      z-index: 1502;
+      overflow-y: auto;
+      transition: left 0.3s ease;
+    }
+    .sidebar.active {
+      left: 0;
+    }
+    .sidebar h2 {
+      font-size: 1.5rem;
+      color: #8b5e3c;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      letter-spacing: 1px;
+      font-weight: 700;
+    }
+    .sidebar ul {
+      list-style: none;
+    }
+    .sidebar ul li {
+      margin: 1rem 0;
+    }
+    .sidebar ul li a {
+      text-decoration: none;
+      color: #6a4523; /* darker brown */
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      transition: background-color 0.3s, color 0.3s;
+      cursor: pointer;
+    }
+    .sidebar ul li a i {
+      min-width: 20px;
+      font-size: 1.2rem;
+    }
+    .sidebar ul li a:hover,
+    .sidebar ul li a.active {
+      background-color: #f1e0c9; /* light cream */
+      color: #8b5e3c;
+    }
+    .overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.3);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      z-index: 1500;
+    }
+    .overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+    main {
+      margin: 2rem auto;
+      max-width: 900px;
+      background-color: #fffaf0; /* ivory */
+      padding: 2rem 2.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(139, 94, 60, 0.15);
+      color: #5c3a21;
+      transition: margin-left 0.3s ease;
+      flex-grow: 1;
+    }
+    h1 {
+      color: #8b5e3c;
+      font-size: 2rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    h2 {
+      color: #6a4523;
+      margin-top: 2rem;
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+      border-bottom: 2px solid #f1e0c9;
+      padding-bottom: 0.3rem;
+    }
+    p, ul {
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+      line-height: 1.5;
+    }
+    ul {
+      padding-left: 1.5rem;
+      list-style-type: disc;
+    }
+    a {
+      color: #8b5e3c;
+      text-decoration: none;
+      font-weight: 600;
+      border-bottom: 1.5px solid #8b5e3c;
+      transition: color 0.3s, border-bottom-color 0.3s;
+    }
+    a:hover {
+      color: #5c3a21;
+      border-bottom-color: #5c3a21;
+    }
+    footer {
+      background-color: #bc8f5f; /* light brown */
+      padding: 20px 10%;
+      color: #4a332f;
+      font-weight: 600;
+      letter-spacing: 0.7px;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+    footer .social-icons {
+      margin: 10px 0 15px 0;
+    }
+    footer .social-icons a {
+      margin: 0 10px;
+      color: #fff;
+      font-size: 1.5rem;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    footer .social-icons a:hover {
+      color: #8b5e3c;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Open menu" aria-expanded="false" aria-controls="sidebar">
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="header-title">Terms & Conditions</div>
+  </header>
+
+  <nav class="sidebar" id="sidebar" aria-label="Sidebar Navigation" aria-hidden="true">
+    <h2>Lotus Coffee</h2>
+    <ul>
+      <li><a href="homepageproject.html"><i class="fas fa-home"></i> Home</a></li>
+      <li><a href="sub2.html"><i class="fas fa-box-open"></i> Subscription</a></li>
+      <li><a href="menu.html"><i class="fas fa-coffee"></i> Menu</a></li>
+      <li><a href="aboutus.html"><i class="fas fa-info-circle"></i> About Us</a></li>
+      <li><a href="faq.html"><i class="fas fa-question-circle"></i> FAQs</a></li>
+      <li><a href="terms.html" class="active"><i class="fas fa-file-contract"></i> Terms & Conditions</a></li>
+      <li><a href="return.html"><i class="fas fa-undo-alt"></i> Refund Policy</a></li>
+      <li><a href="account.html"><i class="fas fa-user"></i> Log In / Sign Up</a></li>
+    </ul>
+  </nav>
+
+  <div class="overlay" id="overlay"></div>
+
+  <main role="main">
+    <h1>Terms & Conditions</h1>
+
+    <p>Welcome to Lotus Coffee! Please read these Terms and Conditions carefully before using our services.</p>
+
+    <h2>Membership and Subscription</h2>
+    <p>By subscribing to our coffee membership, you agree to the following:</p>
+    <ul>
+      <li>Membership benefits are valid only for the registered member and are non-transferable.</li>
+      <li>Subscription plans are billed monthly or as per the selected plan, and cancellations must follow the stated policy.</li>
+      <li>We reserve the right to modify or terminate the membership program at any time with prior notice.</li>
+    </ul>
+
+    <h2>Orders and Delivery</h2>
+    <p>We strive to deliver your orders promptly. However:</p>
+    <ul>
+      <li>Delivery times may vary due to external factors beyond our control.</li>
+      <li>We are not responsible for delays caused by third-party delivery services.</li>
+      <li>Please ensure your delivery address and contact details are accurate.</li>
+    </ul>
+
+    <h2>Refunds and Returns</h2>
+    <p>Due to the perishable nature of our products, refunds and returns are handled as follows:</p>
+    <ul>
+      <li>We do not accept returns on consumable products.</li>
+      <li>If your order is damaged or incorrect, please contact us within 24 hours with photos for assessment.</li>
+      <li>Refunds or replacements may be offered at our discretion.</li>
+    </ul>
+
+    <h2>User Conduct</h2>
+    <p>When using our website and services, you agree to:</p>
+    <ul>
+      <li>Provide accurate and truthful information.</li>
+      <li>Respect our intellectual property and content.</li>
+      <li>Not engage in any unlawful or harmful activities.</li>
+    </ul>
+
+    <h2>Privacy Policy</h2>
+    <p>Your privacy is important to us. Please review our <a href="privacy.html">Privacy Policy</a> to understand how we collect and use your data.</p>
+
+    <h2>Contact Us</h2>
+    <p>If you have any questions about these Terms and Conditions, please contact us at <a href="mailto:lotusbrewcafe@gmail.com">lotusbrewcafe@gmail.com</a>.</p>
+  </main>
+
+  <footer role="contentinfo">
+    <div class="social-icons" aria-label="Social Media Links">
+      <a href="https://www.instagram.com/lotuscoffee.ph" target="_blank" rel="noopener" aria-label="Instagram">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="https://www.facebook.com/profile.php?id=61576273525574" target="_blank" rel="noopener" aria-label="Facebook">
+        <i class="fab fa-facebook"></i>
+      </a>
+    </div>
+    <div>© 2025 Lotus Coffee Philippines Inc.</div>
+  </footer>
+
+  <script>
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('overlay');
+
+    function openSidebar() {
+      sidebar.classList.add('active');
+      overlay.classList.add('active');
+      sidebar.setAttribute('aria-hidden', 'false');
+      hamburgerBtn.setAttribute('aria-expanded', 'true');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('active');
+      overlay.classList.remove('active');
+      sidebar.setAttribute('aria-hidden', 'true');
+      hamburgerBtn.setAttribute('aria-expanded', 'false');
+    }
+    hamburgerBtn.addEventListener('click', () => {
+      if (sidebar.classList.contains('active')) {
+        closeSidebar();
+      } else {
+        openSidebar();
+      }
+    });
+    overlay.addEventListener('click', closeSidebar);
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && sidebar.classList.contains('active')) {
+        closeSidebar();
+      }
+    });
+  </script>
+</body>
+</html>

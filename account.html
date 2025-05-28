@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Account Page</title>
+
+  <!-- Poppins font from Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #dfd8cd;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    .form-wrapper {
+      width: 100%;
+      max-width: 400px;
+      margin: 80px auto;
+      position: relative;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    input[name="toggle"] {
+      display: none;
+    }
+
+    .form-boxf {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      background: #fff;
+      padding: 40px 30px;
+      border-radius: 12px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      transition: all 0.5s ease-in-out;
+      opacity: 0;
+      visibility: hidden;
+      transform: scale(0.98);
+    }
+
+    #login:checked ~ .forms .login,
+    #signup:checked ~ .forms .signup,
+    #forgot:checked ~ .forms .forgot {
+      opacity: 1;
+      visibility: visible;
+      transform: scale(1);
+      z-index: 1;
+    }
+
+    .form-boxf form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .form-logo {
+      display: block;
+      margin: 0 auto 15px;
+      max-width: 120px;
+    }
+
+    .form-boxf h2 {
+      text-align: center;
+      color: #6F4E37; /* brown */
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    .form-boxf input {
+      padding: 14px;
+      border-radius: 25px;
+      border: 2px solid #bc9f7d;
+      font-size: 16px;
+      transition: border-color 0.3s ease, background-color 0.3s ease;
+    }
+
+    .form-boxf input:focus {
+      outline: none;
+      border-color: rgb(95, 8, 8);
+      background: #fff7f7;
+    }
+
+    .form-boxf button {
+      padding: 14px;
+      background: #bc9f7d;
+      color: white;
+      font-weight: bold;
+      border-radius: 25px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+
+    .form-boxf button:hover {
+      background: #6F4E37;
+    }
+
+    .or-divider {
+      text-align: center;
+      position: relative;
+      margin: 15px 0;
+      font-size: 14px;
+      color: #999;
+    }
+
+    .or-divider::before,
+    .or-divider::after {
+      content: "";
+      height: 1px;
+      background: #ccc;
+      position: absolute;
+      top: 50%;
+      width: 40%;
+    }
+
+    .or-divider::before {
+      left: 0;
+    }
+
+    .or-divider::after {
+      right: 0;
+    }
+
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .social-icons a {
+      background: white;
+      border: 2px solid #ccc;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #6F4E37;
+      font-size: 18px;
+      text-decoration: none;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .social-icons a:hover {
+      background: #f0e9df;
+      border-color: palevioletred;
+      color: palevioletred;
+    }
+
+    .form-boxf p {
+      text-align: center;
+      font-size: 14px;
+      color: #6F4E37;
+    }
+
+    .link {
+      cursor: pointer;
+      color: rgb(82, 63, 63);
+      font-weight: 600;
+      transition: text-decoration 0.3s ease;
+    }
+
+    .link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<div class="form-wrapper">
+  <!-- Toggle Inputs -->
+  <input type="radio" name="toggle" id="login" checked>
+  <input type="radio" name="toggle" id="signup">
+  <input type="radio" name="toggle" id="forgot">
+
+  <div class="forms">
+
+    <div class="form-boxf login">
+      <form action="welsub.html" method="get">
+        <img src="logotus.png" alt="Logo" class="form-logo" />
+        <h2>Login</h2>
+        <input type="email" placeholder="Email" required />
+        <input type="password" placeholder="Password" required />
+        <button type="submit">Log In</button>
+
+        <div class="or-divider">or log in with</div>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-google"></i></a>
+          <a href="#"><i class="fab fa-apple"></i></a>
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fas fa-phone"></i></a>
+        </div>
+
+        <p>Don't have an account? <label for="signup" class="link">Sign Up</label></p>
+        <p><label for="forgot" class="link">Forgot Password?</label></p>
+      </form>
+    </div>
+
+    <div class="form-boxf signup">
+      <form>
+        <img src="logotus.png" alt="Logo" class="form-logo" />
+        <h2>Sign Up</h2>
+        <input type="text" placeholder="First Name" required />
+        <input type="text" placeholder="Last Name" required />
+        <input type="email" placeholder="Email" required />
+        <input type="password" placeholder="Password" required />
+        <button type="submit">Create Account</button>
+
+        <div class="or-divider">or register with</div>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-google"></i></a>
+          <a href="#"><i class="fab fa-apple"></i></a>
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fas fa-phone"></i></a>
+        </div>
+
+        <p>Already have an account? <label for="login" class="link">Log In</label></p>
+      </form>
+    </div>
+
+    <div class="form-boxf forgot">
+      <form>
+        <h2>Forgot Password</h2>
+        <input type="email" placeholder="Enter your email" required />
+        <button type="submit">Reset Password</button>
+
+        <p>Don't have an account? <label for="signup" class="link">Sign Up</label></p>
+      </form>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

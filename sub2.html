@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lotus Coffee Membership</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <!-- Font Awesome for social icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+  body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  background: #EFE5DC;
+  color: #5C4033;
+}
+
+/* Header and Nav */
+header.top-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 40px;
+  background: #fff;
+  border-radius: 12px 12px 0 0;
+  border-bottom: 4px solid #D2BBA0;
+  box-shadow: none;
+  margin-bottom: 0;
+}
+
+.site-logo img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+}
+
+.main-nav ul {
+  display: flex;
+  gap: 40px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.main-nav a {
+  color: #D2BBA0;
+  font-weight: 600;
+  font-size: 1.25rem;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.main-nav a:hover,
+.main-nav a:focus {
+  color: #5C4033;
+  text-decoration: underline;
+}
+
+@media (max-width: 700px) {
+  header.top-header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px 10px;
+  }
+  .main-nav ul {
+    gap: 20px;
+    font-size: 1rem;
+  }
+  .site-logo img {
+    width: 70px;
+    height: 70px;
+  }
+}
+
+/* Promo Popup */
+.promo-popup {
+  background: #F5EEE6;
+  border: 1px solid #D2BBA0;
+  padding: 15px 20px;
+  margin: 20px auto;
+  max-width: 700px;
+  border-radius: 10px;
+  text-align: center;
+  color: #5C4033;
+  box-shadow: 0 2px 8px rgba(92, 64, 51, 0.2);
+}
+
+.promo-popup a {
+  color: #5C4033;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.promo-popup .close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #5C4033;
+}
+
+/* Main Content */
+main.main-content {
+  max-height: 75vh;
+  overflow-y: auto;
+  padding: 20px 30px;
+  background: #EFE5DC;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(92, 64, 51, 0.2);
+  margin: 30px auto;
+  max-width: 700px;
+  color: #5C4033;
+}
+
+main h1 {
+  margin-bottom: 15px;
+}
+
+main p {
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+/* Tier Sections */
+section.tier {
+  border-radius: 10px;
+  padding: 20px;
+  margin: 30px 0 20px 0;
+  box-shadow: 0 2px 6px rgba(92, 64, 51, 0.2);
+  background: white;
+}
+
+section.tier h3 {
+  margin-top: 0;
+  color: #A1866F;
+}
+
+section.tier.gold { border-left: 6px solid #d4af37; }
+section.tier.silver { border-left: 6px solid #c0c0c0; }
+section.tier.bronze { border-left: 6px solid #cd7f32; }
+
+section.tier ul {
+  margin: 10px 0 0 20px;
+  list-style-type: disc;
+  color: #5C4033;
+  font-size: 1rem;
+}
+
+/* Membership Card */
+.membership-card {
+  background: #F2E8DF;
+  border: 2px dashed #D2BBA0;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  margin: 30px 0;
+  font-weight: 600;
+  color: #8B6D53;
+  box-shadow: 0 0 10px #D2BBA0;
+  font-size: 1.1rem;
+}
+
+/* Reward Info */
+.reward-info {
+  background: #F5EEE6;
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 20px;
+  font-style: italic;
+  border: 1px solid #D2BBA0;
+  font-size: 1rem;
+  color: #5C4033;
+}
+
+/* Buttons */
+button.subscribe-button {
+  display: block;
+  background-color: #5C4033;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 25px;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 20px auto 40px auto;
+  transition: background-color 0.3s ease;
+}
+
+button.subscribe-button:hover {
+  background-color: #3E2C23;
+}
+
+.home-button {
+  display: inline-block;
+  background-color: #5C4033;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.3s ease;
+  margin: 0 auto 40px auto;
+  text-align: center;
+}
+
+.home-button:hover {
+  background-color: #3E2C23;
+}
+
+.home-button-container {
+  text-align: center;
+}
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 400px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  position: relative;
+  color: #5C4033;
+}
+
+.modal-content input,
+.modal-content select,
+.modal-content textarea {
+  width: 80%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #333;
+}
+
+.modal-content label {
+  display: block;
+  margin: 15px auto 5px;
+  font-weight: 600;
+  font-size: 14px;
+  text-align: left;
+  width: 80%;
+}
+
+.modal-content input[type='checkbox'] {
+  transform: scale(1.2);
+  margin-right: 8px;
+}
+
+.modal-content button {
+  padding: 10px 20px;
+  border: none;
+  background: #5C4033;
+  color: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 15px;
+  transition: background-color 0.3s ease;
+}
+
+.modal-content button:hover {
+  background: #3E2C23;
+}
+
+.close-modal,
+.close-button {
+  position: absolute;
+  top: 12px;
+  right: 20px;
+  font-size: 24px;
+  color: #5C4033;
+  cursor: pointer;
+}
+
+.done-message {
+  margin-top: 20px;
+  color: #4caf50;
+  font-weight: bold;
+}
+
+.error-message {
+  color: #d94a4a;
+  font-size: 14px;
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  main.main-content {
+    padding: 15px 20px;
+    max-width: 95%;
+  }
+  .modal-content input,
+  .modal-content select,
+  .modal-content textarea,
+  .modal-content label {
+    width: 95%;
+  }
+}
+
+/* Footer */
+.footer-container {
+  background-color: #D2BBA0;
+  padding: 0;
+  width: 100%;
+}
+
+.main-footer {
+  background-color: #EFE5DC;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 10%;
+  border-top: 1px solid #C1B0A3;
+}
+
+.social-section {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.social-title {
+  color: #3E2C23;
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.social-icon {
+  background-color: #D2BBA0;
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+  transform: translateY(-5px);
+  background-color: white;
+  color: #D2BBA0;
+}
+
+.company-info {
+  text-align: left;
+  color: #555;
+}
+
+.company-name {
+  font-weight: bold;
+  color: #3E2C23;
+  font-size: 1.1rem;
+  margin-bottom: 5px;
+}
+
+.company-details,
+.company-copyright {
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.footer-logo {
+  width: 35px;
+  height: auto;
+}
+
+.footer-links {
+  text-align: right;
+}
+
+.footer-link {
+  display: block;
+  color: #555;
+  text-decoration: none;
+  margin: 10px 0;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.footer-link:hover {
+  color: #3E2C23;
+  transform: translateX(-5px);
+}
+
+@media (max-width: 700px) {
+  .main-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px 5%;
+  }
+
+  .footer-links {
+    text-align: left;
+    margin-top: 20px;
+  }
+}
+
+  </style>
+</head>
+<body>
+
+<header class="top-header">
+  <div class="site-logo">
+    <img src="logotus.png" alt="Logo of Lotus Coffee" />
+  </div>
+  <nav class="main-nav">
+    <ul>
+      <li><a href="about.html">About</a></li>
+      <li><a href="menu.html">Menu</a></li>
+      <li><a href="homepageproject.html">Home</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- Promo Popup -->
+<div class="promo-popup" id="promoPopup">
+  <strong>Enjoy ₱100 off on your first espresso order!</strong><br />
+  Valid for delivery orders. <a href="menu.html">Order Now!</a><br />
+  <small>
+    <a href="sub.html">Learn more about our membership here.</a>
+  </small>
+  <button class="close-btn" id="closePromoBtn" aria-label="Close promo popup">×</button>
+</div>
+
+<main class="main-content" tabindex="0" aria-label="Membership Information">
+  <h1>Membership Benefits</h1>
+  <p>Choose the Lotus Coffee membership that suits your coffee lifestyle and enjoy exclusive perks and savings.</p>
+
+  <section class="tier gold">
+    <h3>Gold Member</h3>
+    <ul>
+      <li>Enjoy up to ₱200 off on your monthly coffee subscription.</li>
+      <li>Earn reward points for every purchase to redeem exclusive gifts and discounts.</li>
+      <li>Access to special members-only promotions and early product launches.</li>
+    </ul>
+  </section>
+
+  <section class="tier silver">
+    <h3>Silver Member</h3>
+    <ul>
+      <li>Get up to ₱100 off on your monthly coffee subscription.</li>
+      <li>Earn reward points for every purchase to redeem discounts and small gifts.</li>
+      <li>Exclusive invites to coffee tasting events and workshops.</li>
+    </ul>
+  </section>
+
+  <section class="tier bronze">
+    <h3>Bronze Member</h3>
+    <ul>
+      <li>Receive ₱50 off your monthly coffee subscription.</li>
+      <li>Earn points that can be used for discounts on future purchases.</li>
+      <li>Newsletter subscription with coffee tips and updates.</li>
+    </ul>
+  </section>
+
+  <div class="membership-card">
+    Your membership card will be sent via email once you subscribe.
+  </div>
+
+  <div class="reward-info">
+    <p>With every coffee purchase, you earn reward points that bring you closer to exclusive Lotus Coffee rewards!</p>
+  </div>
+
+  <button class="subscribe-button" id="openSubscribeBtn" aria-haspopup="dialog" aria-controls="subscribeModal">Subscribe Now</button>
+</main>
+
+<!-- Subscription Modal -->
+<div id="subscribeModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="subscribeModalTitle" aria-describedby="subscribeModalDesc">
+  <div class="modal-content">
+    <span class="close-modal" id="closeModalBtn" role="button" tabindex="0" aria-label="Close subscription form">&times;</span>
+    <h2 id="subscribeModalTitle">Subscribe to Lotus Coffee</h2>
+    <form id="subscriptionForm" novalidate>
+      <label for="fullName">Full Name*</label>
+      <input type="text" id="fullName" name="fullName" placeholder="Your full name" required aria-required="true" />
+
+      <label for="email">Email Address*</label>
+      <input type="email" id="email" name="email" placeholder="your.email@example.com" required aria-required="true" />
+
+      <label for="subscriptionTier">Select Membership Tier*</label>
+      <select id="subscriptionTier" name="subscriptionTier" required aria-required="true">
+        <option value="" disabled selected>-- Select Tier --</option>
+        <option value="Gold Member">Gold Member</option>
+        <option value="Silver Member">Silver Member</option>
+        <option value="Bronze Member">Bronze Member</option>
+      </select>
+
+      <label for="paymentMethod">Payment Method *</label>
+      <select id="paymentMethod" name="paymentMethod" required aria-required="true">
+        <option value="" disabled selected>-- Select Method --</option>
+        <option value="GCash">GCash</option>
+        <option value="Credit Card">Credit Card</option>
+        <option value="PayMaya">PayMaya</option>
+        <option value="Bank Transfer">Bank Transfer</option>
+        <option value="Cash on Delivery">Cash on Delivery</option>
+      </select>
+
+      <!-- Dynamic payment details input -->
+      <div id="paymentDetailsContainer" style="display:none; margin-top: 10px; text-align: left; width: 80%; margin-left: auto; margin-right: auto;">
+        <label for="paymentDetails" id="paymentDetailsLabel">Enter Payment Information*</label>
+        <input type="text" id="paymentDetails" name="paymentDetails" placeholder="" aria-required="true" />
+      </div>
+
+      <label>
+        <input type="checkbox" id="termsCheckbox" name="termsCheckbox" required aria-required="true" />
+        I agree to the <a href="terms.html" target="_blank" rel="noopener noreferrer">terms and conditions</a>.
+      </label>
+
+      <button type="submit" id="submitBtn">Subscribe</button>
+      <div id="formMessage" role="alert" aria-live="assertive"></div>
+      <div id="successActions" style="display:none; margin-top:20px;">
+        <button type="button" id="backToHomeBtn" style="background:#a04d69;color:#fff;padding:10px 22px;border:none;border-radius:8px;cursor:pointer;font-size:16px;">Back to Home</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="home-button-container">
+  <a href="homepageproject.html" class="home-button" aria-label="Return to homepage">Back to Home</a>
+</div>
+
+<!-- Footer -->
+<div class="footer-container">
+  <div class="social-section">
+    <h3 class="social-title">Follow us on</h3>
+    <div class="social-icons">
+      <a href="https://www.instagram.com/lotuscoffee.ph?igsh=ZzB4ZWxzY2M1MjRr" class="social-icon" aria-label="Instagram" target="_blank" rel="noopener">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="https://www.facebook.com/profile.php?id=61576273525574" class="social-icon" aria-label="Facebook" target="_blank" rel="noopener">
+        <i class="fab fa-facebook"></i>
+      </a>
+    </div>
+  </div>
+  <div class="main-footer">
+    <div class="company-info">
+      <div class="company-name">LOTUS COFFEE PHILIPPINES INC.</div>
+      <div class="company-details">Company registration no: 635-381-780-00000</div>
+      <div class="company-info">Recto, Manila</div>
+      <div class="company-info">Email: lotusbrewcafe@gmail.com</div>
+      <div class="company-copyright">COPYRIGHT 2025 © LOTUS COFFEE</div>
+    </div>
+    <div class="footer-links">
+      <a href="#" class="footer-link">Privacy Policy</a>
+      <a href="#" class="footer-link">Terms & Conditions</a>
+      <a href="#" class="footer-link">Customer Support</a>
+      <a href="return.html" class="footer-link">Refund Policy</a>
+      <a href="#" class="footer-link">FAQS</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Promo popup close
+  const promoPopup = document.getElementById('promoPopup');
+  const closePromoBtn = document.getElementById('closePromoBtn');
+  closePromoBtn.addEventListener('click', () => {
+    promoPopup.style.display = 'none';
+  });
+
+  // Modal open and close
+  const openSubscribeBtn = document.getElementById('openSubscribeBtn');
+  const subscribeModal = document.getElementById('subscribeModal');
+  const closeModalBtn = document.getElementById('closeModalBtn');
+  const subscriptionForm = document.getElementById('subscriptionForm');
+  const formMessage = document.getElementById('formMessage');
+  const successActions = document.getElementById('successActions');
+  const backToHomeBtn = document.getElementById('backToHomeBtn');
+
+  // Payment details inputs
+  const paymentMethodSelect = document.getElementById('paymentMethod');
+  const paymentDetailsContainer = document.getElementById('paymentDetailsContainer');
+  const paymentDetailsInput = document.getElementById('paymentDetails');
+  const paymentDetailsLabel = document.getElementById('paymentDetailsLabel');
+
+  openSubscribeBtn.addEventListener('click', () => {
+    subscribeModal.style.display = 'flex';
+    subscriptionForm.reset();
+    formMessage.textContent = '';
+    formMessage.className = '';
+    successActions.style.display = 'none';
+    subscriptionForm.querySelector('button[type="submit"]').disabled = false;
+    paymentDetailsContainer.style.display = 'none';
+    paymentDetailsInput.required = false;
+    document.getElementById('fullName').focus();
+  });
+
+  closeModalBtn.addEventListener('click', () => {
+    subscribeModal.style.display = 'none';
+  });
+
+  // Close modal on outside click
+  window.addEventListener('click', (e) => {
+    if (e.target === subscribeModal) {
+      subscribeModal.style.display = 'none';
+    }
+  });
+
+  // Keyboard accessibility for close modal
+  closeModalBtn.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      subscribeModal.style.display = 'none';
+    }
+  });
+
+  // Show/hide payment details input based on payment method
+  paymentMethodSelect.addEventListener('change', () => {
+    const selected = paymentMethodSelect.value;
+    if (!selected) {
+      paymentDetailsContainer.style.display = 'none';
+      paymentDetailsInput.required = false;
+      paymentDetailsInput.value = '';
+      paymentDetailsInput.placeholder = '';
+      return;
+    }
+
+    paymentDetailsContainer.style.display = 'block';
+    paymentDetailsInput.required = true;
+
+    switch (selected) {
+      case 'GCash':
+        paymentDetailsLabel.textContent = 'Enter your GCash mobile number*';
+        paymentDetailsInput.placeholder = 'e.g. 09171234567';
+        paymentDetailsInput.type = 'tel';
+        break;
+      case 'Credit Card':
+        paymentDetailsLabel.textContent = 'Enter your Credit Card number*';
+        paymentDetailsInput.placeholder = 'e.g. 1234 5678 9012 3456';
+        paymentDetailsInput.type = 'text';
+        break;
+      case 'PayMaya':
+        paymentDetailsLabel.textContent = 'Enter your PayMaya mobile number*';
+        paymentDetailsInput.placeholder = 'e.g. 09171234567';
+        paymentDetailsInput.type = 'tel';
+        break;
+      case 'Bank Transfer':
+        paymentDetailsLabel.textContent = 'Enter your Bank Account number*';
+        paymentDetailsInput.placeholder = 'e.g. 1234567890';
+        paymentDetailsInput.type = 'text';
+        break;
+      case 'Cash on Delivery':
+        paymentDetailsLabel.textContent = 'Enter your delivery address*';
+        paymentDetailsInput.placeholder = 'Street, City, ZIP code';
+        paymentDetailsInput.type = 'text';
+        break;
+      default:
+        paymentDetailsLabel.textContent = 'Enter Payment Information*';
+        paymentDetailsInput.placeholder = '';
+        paymentDetailsInput.type = 'text';
+    }
+  });
+
+  // Form validation and submit
+  subscriptionForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    formMessage.textContent = '';
+    formMessage.className = '';
+    successActions.style.display = 'none';
+
+    const fullName = subscriptionForm.fullName.value.trim();
+    const email = subscriptionForm.email.value.trim();
+    const tier = subscriptionForm.subscriptionTier.value;
+    const paymentMethod = subscriptionForm.paymentMethod.value;
+    const paymentDetails = paymentDetailsInput.value.trim();
+    const termsChecked = subscriptionForm.termsCheckbox.checked;
+
+    if (!fullName || !email || !tier || !paymentMethod || !termsChecked) {
+      formMessage.textContent = 'Please complete all required fields and accept the terms.';
+      formMessage.className = 'error-message';
+      return;
+    }
+
+    if (paymentDetailsContainer.style.display === 'block' && !paymentDetails) {
+      formMessage.textContent = 'Please enter your payment information.';
+      formMessage.className = 'error-message';
+      return;
+    }
+
+    // Email pattern check
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      formMessage.textContent = 'Please enter a valid email address.';
+      formMessage.className = 'error-message';
+      return;
+    }
+
+    // Success
+    formMessage.textContent = 'Thank you for subscribing! Your membership card will be emailed shortly.';
+    formMessage.className = 'done-message';
+    subscriptionForm.querySelector('button[type="submit"]').disabled = true;
+    successActions.style.display = 'block';
+  });
+
+  // Back to Home button logic
+  backToHomeBtn.addEventListener('click', () => {
+    subscribeModal.style.display = 'none';
+    subscriptionForm.querySelector('button[type="submit"]').disabled = false;
+    subscriptionForm.reset();
+    formMessage.textContent = '';
+    formMessage.className = '';
+    successActions.style.display = 'none';
+    paymentDetailsContainer.style.display = 'none';
+    paymentDetailsInput.required = false;
+    window.location.href = 'index.html';
+  });
+</script>
+
+</body>
+</html>
