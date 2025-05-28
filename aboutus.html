@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Lotus Coffee - About Us</title>
+     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+     <style>
+          * {
+               margin: 0;
+               padding: 0;
+               box-sizing: border-box;
+          }
+
+          body {
+               font-family: 'Poppins', sans-serif;
+               line-height: 1.6;
+               color: #333;
+               background-color: #bc9f7d;
+          }
+
+          .top-header {
+               background-color: #3c1006;
+               padding: 1rem 2rem;
+               display: flex;
+               justify-content: space-between;
+               align-items: center;
+               position: sticky;
+               top: 0;
+               z-index: 1000;
+          }
+
+          .site-logo img {
+               width: 70px;
+               height: 70px;
+               border-radius: 50%;
+          }
+
+          .top-menu {
+               display: flex;
+               gap: 2rem;
+          }
+
+          .menu-link {
+               color: white;
+               text-decoration: none;
+               font-weight: 500;
+               transition: color 0.3s ease;
+          }
+
+          .menu-link:hover {
+               color: #bc9f7d;
+          }
+
+          .mobile-menu-toggle {
+               display: none;
+               background: none;
+               border: none;
+               color: white;
+               font-size: 1.5rem;
+               cursor: pointer;
+          }
+
+          .page-banner {
+               background: linear-gradient(rgba(60, 16, 6, 0.7), rgba(60, 16, 6, 0.7)), url('https://i.pinimg.com/736x/5d/df/fc/5ddffc6b4e479ac4b4f4e5c608091df3.jpg');
+               background-size: cover;
+               background-position: center;
+               height: 400px;
+               display: flex;
+               align-items: center;
+               justify-content: center;
+               text-align: center;
+               color: white;
+          }
+
+          .page-title {
+               font-size: 3rem;
+               font-weight: 700;
+               margin-bottom: 1rem;
+               font-family: 'Great Vibes', cursive;
+          }
+
+          .page-subtitle {
+               font-size: 1.2rem;
+               font-weight: 300;
+          }
+
+          .story-section, .values-section, .team-section, .testimonials-section {
+               padding: 4rem 2rem;
+               max-width: 1200px;
+               margin: 0 auto;
+          }
+
+          .section-title {
+               text-align: center;
+               font-size: 2.5rem;
+               color: #3c1006;
+               margin-bottom: 3rem;
+               font-weight: 600;
+          }
+
+          .story-container {
+               display: grid;
+               grid-template-columns: 1fr 1fr;
+               gap: 3rem;
+               align-items: center;
+          }
+
+          .story-image img {
+               width: 100%;
+               border-radius: 15px;
+               box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+          }
+
+          .story-content h3 {
+               color: #3c1006;
+               font-size: 1.8rem;
+               margin-bottom: 1rem;
+          }
+
+          .story-content p {
+               margin-bottom: 1rem;
+               font-size: 1.1rem;
+               line-height: 1.8;
+               color: #333;
+          }
+
+          .values-wrapper {
+               background-color: rgba(255, 255, 255, 0.3);
+               padding: 3rem;
+               border-radius: 20px;
+               backdrop-filter: blur(10px);
+          }
+
+          .values-container {
+               display: grid;
+               grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+               gap: 2rem;
+          }
+
+          .value-box {
+               background: white;
+               padding: 2rem;
+               border-radius: 15px;
+               text-align: center;
+               box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+               transition: transform 0.3s ease;
+          }
+
+          .value-box:hover {
+               transform: translateY(-5px);
+          }
+
+          .value-icon {
+               font-size: 3rem;
+               color: #3c1006;
+               margin-bottom: 1rem;
+          }
+
+          .value-title {
+               color: #3c1006;
+               font-size: 1.5rem;
+               margin-bottom: 1rem;
+          }
+
+          .value-text {
+               color: #666;
+               line-height: 1.6;
+          }
+
+          .team-container {
+               display: grid;
+               grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+               gap: 2rem;
+          }
+
+          .team-member {
+               background: white;
+               border-radius: 15px;
+               overflow: hidden;
+               box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+               transition: transform 0.3s ease;
+          }
+
+          .team-member:hover {
+               transform: translateY(-5px);
+          }
+
+          .member-image {
+               display: block;
+               height: 300px;
+               overflow: hidden;
+          }
+
+          .member-image img {
+               width: 100%;
+               height: 100%;
+               object-fit: cover;
+          }
+
+          .member-info {
+               padding: 1.5rem;
+          }
+
+          .member-name {
+               color: #3c1006;
+               font-size: 1.3rem;
+               margin-bottom: 0.5rem;
+          }
+
+          .member-role {
+               color: #bc9f7d;
+               font-weight: 600;
+               text-transform: uppercase;
+               font-size: 0.9rem;
+               margin-bottom: 1rem;
+          }
+
+          .member-desc {
+               color: #666;
+               line-height: 1.6;
+          }
+
+          .testimonials-container {
+               display: grid;
+               grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+               gap: 2rem;
+          }
+
+          .testimonial-card {
+               background: white;
+               padding: 2rem;
+               border-radius: 15px;
+               box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+          }
+
+          .testimonial-text {
+               font-style: italic;
+               margin-bottom: 1.5rem;
+               line-height: 1.6;
+               color: #333;
+          }
+
+          .testimonial-author {
+               display: flex;
+               align-items: center;
+               gap: 1rem;
+          }
+
+          .author-image img {
+               width: 60px;
+               height: 60px;
+               border-radius: 50%;
+               object-fit: cover;
+          }
+
+          .author-info h4 {
+               color: #3c1006;
+               margin-bottom: 0.25rem;
+          }
+
+          .author-info p {
+               color: #666;
+               font-size: 0.9rem;
+          }
+
+          .cta-section {
+               background-color: #3c1006;
+               color: white;
+               padding: 4rem 2rem;
+               text-align: center;
+          }
+
+          .cta-container {
+               max-width: 800px;
+               margin: 0 auto;
+          }
+
+          .cta-title {
+               font-size: 2.5rem;
+               margin-bottom: 1rem;
+               font-family: 'Great Vibes', cursive;
+          }
+
+          .cta-text {
+               font-size: 1.2rem;
+               margin-bottom: 2rem;
+               line-height: 1.6;
+          }
+
+          .cta-button {
+               display: inline-block;
+               background-color: #bc9f7d;
+               color: white;
+               padding: 1rem 2rem;
+               text-decoration: none;
+               border-radius: 50px;
+               font-weight: 600;
+               transition: all 0.3s ease;
+          }
+
+          .cta-button:hover {
+               background-color: #a68962;
+               transform: translateY(-2px);
+          }
+
+          .footer-container {
+               background-color: #3c1006;
+               color: white;
+               padding: 3rem 2rem 1rem;
+          }
+
+          .social-section {
+               text-align: center;
+               margin-bottom: 2rem;
+          }
+
+          .social-title {
+               margin-bottom: 1rem;
+               font-size: 1.2rem;
+          }
+
+          .social-icons {
+               display: flex;
+               justify-content: center;
+               gap: 1rem;
+          }
+
+          .social-icon {
+               color: white;
+               font-size: 1.5rem;
+               transition: color 0.3s ease;
+          }
+
+          .social-icon:hover {
+               color: #bc9f7d;
+          }
+
+          .main-footer {
+               display: flex;
+               justify-content: space-between;
+               align-items: flex-start;
+               border-top: 1px solid #555;
+               padding-top: 2rem;
+          }
+
+          .company-info {
+               flex: 1;
+          }
+
+          .company-name {
+               font-weight: 600;
+               font-size: 1.1rem;
+               margin-bottom: 0.5rem;
+          }
+
+          .company-details, .company-info {
+               margin-bottom: 0.25rem;
+               color: #ccc;
+          }
+
+          .company-copyright {
+               margin-top: 1rem;
+               font-size: 0.9rem;
+               color: #999;
+          }
+
+          .footer-links {
+               display: flex;
+               flex-direction: column;
+               gap: 0.5rem;
+          }
+
+          .footer-link {
+               color: #ccc;
+               text-decoration: none;
+               transition: color 0.3s ease;
+          }
+
+          .footer-link:hover {
+               color: #bc9f7d;
+          }
+
+          .scroll-top {
+               position: fixed;
+               bottom: 2rem;
+               right: 2rem;
+               background-color: #3c1006;
+               color: white;
+               border: none;
+               width: 50px;
+               height: 50px;
+               border-radius: 50%;
+               font-size: 1.2rem;
+               cursor: pointer;
+               opacity: 0;
+               visibility: hidden;
+               transition: all 0.3s ease;
+               z-index: 1000;
+          }
+
+          .scroll-top.show {
+               opacity: 1;
+               visibility: visible;
+          }
+
+          .scroll-top:hover {
+               background-color: #bc9f7d;
+               transform: translateY(-2px);
+          }
+
+          @media (max-width: 768px) {
+               .mobile-menu-toggle {
+                    display: block;
+               }
+
+               .top-menu {
+                    display: none;
+                    position: absolute;
+                    top: 100%;
+                    left: 0;
+                    right: 0;
+                    background-color: #3c1006;
+                    flex-direction: column;
+                    padding: 1rem 2rem;
+               }
+
+               .top-menu.show {
+                    display: flex;
+               }
+
+               .story-container {
+                    grid-template-columns: 1fr;
+                    gap: 2rem;
+               }
+
+               .page-title {
+                    font-size: 2rem;
+               }
+
+               .section-title {
+                    font-size: 2rem;
+               }
+
+               .main-footer {
+                    flex-direction: column;
+                    gap: 2rem;
+               }
+
+               .footer-links {
+                    flex-direction: row;
+                    flex-wrap: wrap;
+                    gap: 1rem;
+               }
+          }
+     </style>
+</head>
+
+<body>
+    <header class="top-header">
+      <div class="site-logo">
+        <a href="index.html">
+          <img src="https://imgur.com/Q4eoNHY.jpeg" alt="Logo of Lotus Coffee" width="70" height="70">
+        </a>
+      </div>
+     <nav class="top-menu">
+        <a href="menu.html" class="menu-link">Menu</a>
+        <a href="aboutus.html" class="menu-link">About</a>
+        <a href="account.html" class="menu-link">Login/Register</a>
+     </nav>
+     <button class="mobile-menu-toggle" aria-label="Toggle menu">
+        <i class="fas fa-bars"></i>
+     </button>
+    </header>
+
+     <section class="page-banner">
+          <div class="banner-content">
+               <h1 class="page-title">Our Lotus Journey</h1>
+               <p class="page-subtitle">Discover the passion and stories behind our coffee sanctuary</p>
+          </div>
+     </section>
+
+     <section class="story-section">
+          <h2 class="section-title">Our Story</h2>
+          <div class="story-container">
+               <div class="story-image">
+                    <img src="https://i.pinimg.com/736x/5d/df/fc/5ddffc6b4e479ac4b4f4e5c608091df3.jpg" alt="Lotus Coffee Shop Interior">
+               </div>
+               <div class="story-content">
+                    <h3>How It All Began</h3>
+                    <p>It all started with a group of college students who shared a love for coffee and a passion for solving everyday problems. Between early morning classes, late-night study sessions, and packed schedules, we noticed a common issue on campus—students and staff were constantly rushing, often skipping coffee runs simply because they didn't have the time to wait in line or walk to the nearest café.
+                    <p>That's when the idea hit us: why not start our own coffee shop, right here on campus, designed with convenience in mind? We set up a small coffee stand, and it quickly became a popular spot. But we didn't stop there.</p>
+
+                    <p>Seeing the demand grow, we realized the next step was to bring our service online. That's how the website project began—built to make ordering coffee as quick and easy as possible, especially for those who are always on the go.</p>
+
+                    
+               </div>
+          </div>
+     </section>
+
+     <section class="values-section">
+          <div class="values-wrapper">
+               <h2 class="section-title">Our Values</h2>
+               <div class="values-container">
+                    <div class="value-box">
+                         <div class="value-icon">
+                              <i class="fas fa-leaf"></i>
+                         </div>
+                         <h3 class="value-title">Sustainability</h3>
+                         <p class="value-text">We source our beans ethically from small-scale farmers, ensuring fair compensation and environmentally responsible practices. Our packaging is biodegradable, and we're committed to reducing our carbon footprint.</p>
+                    </div>
+                    <div class="value-box">
+                         <div class="value-icon">
+                              <i class="fas fa-hand-holding-heart"></i>
+                         </div>
+                         <h3 class="value-title">Community</h3>
+                         <p class="value-text">Lotus Coffee is more than a café—it's a gathering place where connections thrive. We regularly host events, support local artists, and contribute to community initiatives that make our neighborhood better.</p>
+                    </div>
+                    <div class="value-box">
+                         <div class="value-icon">
+                              <i class="fas fa-star"></i>
+                         </div>
+                         <h3 class="value-title">Excellence</h3>
+                         <p class="value-text">We believe in the pursuit of perfection in every cup. Our baristas undergo rigorous training, and we maintain exacting standards for our beans, brewing methods, and customer service.</p>
+                    </div>
+               </div>
+          </div>
+     </section>
+
+     <section class="team-section">
+          <h2 class="section-title">Meet Our Team</h2>
+          <div class="team-container">
+               <div class="team-member">
+                    <a href="https://cip1101csadpercolsy2425.on.drv.tw/PORTFOLIO/PORTFOLIO/" class="member-image">
+                         <img src="https://imgur.com/pSccppr.jpeg" alt="Team Member 1">
+                    </a>
+                    <div class="member-info">
+                         <h3 class="member-name">Aliyah Lorrine Percol</h3>
+                         <p class="member-role">Manager</p>
+                         <p class="member-desc">With over 8 years of experience in specialty coffee, Ali brings passion and expertise to every cup.</p>
+                    </div>
+               </div>
+               <div class="team-member">
+                    <a href="https://casey-ocumin.tiiny.site/" class="member-image">
+                         <img src="https://imgur.com/Zz257gA.jpeg" alt="Team Member 2">
+                    </a>
+                    <div class="member-info">
+                         <h3 class="member-name">Casey Gabrielle Ocumin</h3>
+                         <p class="member-role">Barista</p>
+                         <p class="member-desc">Casey's meticulous approach to roasting brings out the unique character of every bean variety we offer.</p>
+                    </div>
+               </div>
+               <div class="team-member">
+                    <a href="team-lia.html" class="member-image">
+                         <img src="https://imgur.com/RmzGcQb.jpeg" alt="Team Member 3">
+                    </a>
+                    <div class="member-info">
+                         <h3 class="member-name">Danice Angelica Joy Pascua</h3>
+                         <p class="member-role">Marketing</p>
+                         <p class="member-desc">Danice creates our delicious range of pastries and desserts that perfectly complement our coffee offerings.</p>
+                    </div>
+               </div>
+               <div class="team-member">
+                    <a href="https://cip1101csadhilariosy2425.on.drv.tw/jakesportfolio/" class="member-image">
+                         <img src="https://imgur.com/8sl44l9.jpeg" alt="Team Member 4">
+                    </a>
+                    <div class="member-info">
+                         <h3 class="member-name">Jhakes Hilario</h3>
+                         <p class="member-role">Shift Supervisor</p>
+                         <p class="member-desc">Jhakes ensures every customer feels welcomed and builds relationships with our local community.</p>
+                    </div>
+               </div>
+          </div>
+     </section>
+
+     <section class="testimonials-section">
+          <h2 class="section-title">What Our Customers Say</h2>
+          <div class="testimonials-container">
+               <div class="testimonial-card">
+                    <p class="testimonial-text">The atmosphere at Lotus Coffee is unmatched. It's the perfect blend of cozy and sophisticated, and their specialty lattes are simply divine. It's become my daily ritual!</p>
+                    <div class="testimonial-author">
+
+                         <div class="author-info">
+                              <h4>Sofia Garcia</h4>
+                              <p>Regular customer since 2025</p>
+                         </div>
+                    </div>
+               </div>
+               <div class="testimonial-card">
+                    <p class="testimonial-text">As a digital nomad, I've worked from cafés around the world. Lotus Coffee offers the perfect workspace—reliable wifi, plenty of outlets, and coffee that keeps me productive all day long.</p>
+                    <div class="testimonial-author">
+
+                         <div class="author-info">
+                              <h4>David Wong</h4>
+                              <p>Tech Entrepreneur</p>
+                         </div>
+                    </div>
+               </div>
+               <div class="testimonial-card">
+                    <p class="testimonial-text">Their commitment to sustainability isn't just talk—you can taste the quality of their ethically sourced beans in every sip. Plus, the staff always remembers my order!</p>
+                    <div class="testimonial-author">
+                         <div class="author-info">
+                              <h4>Emma & Liam Johnson</h4>
+                              <p>Weekend regulars</p>
+                         </div>
+                    </div>
+               </div>
+          </div>
+     </section>
+
+     <section class="cta-section">
+          <div class="cta-container">
+               <h2 class="cta-title">Experience Lotus Coffee Today</h2>
+               <p class="cta-text">Visit our café and discover why our customers keep coming back. From our signature blends to our warm atmosphere, we're waiting to make your day a little brighter.</p>
+               <a href="menu.html" class="cta-button">View Our Menu</a>
+          </div>
+     </section>
+
+     <div class="footer-container">
+          <div class="social-section">
+               <h3 class="social-title">Follow us on</h3>
+               <div class="social-icons">
+                    <a href="https://www.instagram.com/lotuscoffee.ph?igsh=ZzB4ZWxzY2M1MjRr" class="social-icon">
+                         <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.facebook.com/profile.php?id=61576273525574" class="social-icon">
+                         <i class="fab fa-facebook"></i>
+                    </a>
+               </div>
+          </div>
+
+          <div class="main-footer">
+               <div class="company-info">
+                    <div class="company-name">LOTUS COFFEE PHILIPPINES INC.</div>
+                    <div class="company-details">Company registration no: 635-381-780-00000</div>
+                    <div class="company-info">Recto, Manila</div>
+                    <div class="company-info">Email: lotusbrewcafe@gmail.com</div>
+                    <div class="company-copyright">COPYRIGHT 2025 © LOTUS COFFEE</div>
+               </div>
+               <div class="footer-links">
+                    <a href="terms.html" class="footer-link">Privacy Policy</a>
+                    <a href="terms.html" class="footer-link">Terms & Conditions</a>
+                    <a href="#" class="footer-link">Customer Support</a>
+                    <a href="return.html" class="footer-link">Refund Policy</a>
+                    <a href="faq.html" class="footer-link">FAQS</a>
+               </div>
+          </div>
+     </div>
+
+     <button class="scroll-top" aria-label="Back to top">
+          <i class="fas fa-arrow-up"></i>
+     </button>
+
+     <script>
+          window.onload = function () {
+               var scrollTopButton = document.querySelector('.scroll-top');
+               var mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+               var topMenu = document.querySelector('.top-menu');
+
+               
+               mobileMenuToggle.addEventListener('click', function () {
+                    topMenu.classList.toggle('show');
+               });
+
+               window.onscroll = function () {
+                    if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                         scrollTopButton.classList.add('show');
+                    } else {
+                         scrollTopButton.classList.remove('show');
+                    }
+               };
+
+               scrollTopButton.onclick = function () {
+                    document.body.scrollTop = 0;
+                    document.documentElement.scrollTop = 0;
+               };
+          };
+     </script>
+</body>
+
+</html>
