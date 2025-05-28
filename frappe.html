@@ -1,0 +1,1696 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Menu | Frappe </title>
+     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+     <link rel="icon" type="image/x-icon" href="https://i.ibb.co/7x9jFQtH/icon.png">
+     <style>
+          body {
+               font-family: 'Poppins', sans-serif;
+               background-color: #bc9f7d;
+               margin: 0;
+               padding: 0;
+          }
+
+          .navbar {
+               background-color: #3c1006;
+               padding: 15px;
+               display: flex;
+               justify-content: space-between;
+               align-items: center;
+          }
+
+          .nav-button {
+               padding: 8px 15px;
+               border-radius: 8px;
+               text-decoration: none;
+               font-weight: bold;
+               color: white;
+               font-size: 16px;
+               transition: background-color 0.3s;
+          }
+
+          .nav-button:hover {
+               background-color: #bc9f7d;
+          }
+
+          .container {
+               display: flex;
+          }
+
+          .content {
+               margin-left: 35px;
+          }
+
+          h2 {
+               font-family: 'Poppins', sans-serif;
+               color: #fff;
+               font-size: 30px;
+          }
+
+          h1 {
+               font-family: 'Poppins', sans-serif;
+               color: #fff;
+               font-size: 35px;
+          }
+
+          .sidebar {
+               width: 200px;
+               padding: 20px;
+               background-color: #bc9f7d;
+               color: white;
+          }
+
+          .sidebar-heading {
+               font-size: 18px;
+               font-weight: bold;
+               color: #fff;
+               margin-top: 20px;
+               padding-bottom: 5px;
+               border-bottom: 2px solid #fff;
+               width: 160px;
+          }
+
+          .sidebar ul {
+               list-style-type: none;
+               padding: 0;
+          }
+
+          .sidebar ul li {
+               margin: 10px 0;
+          }
+
+          .sidebar a {
+               color: black;
+          }
+
+          .sidebar ul li a {
+               text-decoration: none;
+               color: #fff;
+               font-size: 16px;
+               display: block;
+               padding: 6px 10px;
+               border-radius: 5px;
+               width: 140px;
+               box-sizing: border-box;
+               text-align: left;
+               transition: background-color 0.3s;
+          }
+
+          .sidebar ul li a:hover {
+               background-color: #4a332f;
+          }
+
+          .menu {
+               display: flex;
+               flex-wrap: wrap;
+               gap: 20px;
+          }
+
+          .menu-item {
+               background-color: #fff;
+               padding: 15px;
+               border-radius: 10px;
+               text-align: center;
+               width: 150px;
+               height: 350px;
+               box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+               cursor: pointer;
+               transition: transform 0.3s;
+               position: relative;
+               display: flex;
+               flex-direction: column;
+               align-items: center;
+          }
+
+          .menu-item img {
+               width: 100%;
+               height: auto;
+               border-radius: 10px;
+               transition: transform 0.3s;
+               margin-bottom: 10px;
+          }
+
+          .menu-item h3 {
+               font-size: 15px;
+               margin: 10px 0 5px 0;
+               padding: 0 5px;
+          }
+
+          .menu-item h4 {
+               position: absolute;
+               bottom: 50px;
+               left: 0;
+               right: 0;
+               margin: 0 auto;
+               font-size: 14px;
+               color: #555;
+          }
+
+          .menu-item:hover {
+               transform: scale(1.05);
+          }
+
+          .menu-item:hover img {
+               transform: scale(1.1);
+          }
+
+          .modal {
+               display: none;
+               position: fixed;
+               z-index: 1000;
+               left: 0;
+               top: 0;
+               width: 100%;
+               height: 100%;
+               background-color: rgba(0, 0, 0, 0.5);
+               justify-content: center;
+               align-items: center;
+          }
+
+          /* Updated modal-content CSS */
+          .modal-content {
+               background-color: #fff;
+               margin: 2% auto;
+               padding: 15px;
+               border-radius: 12px;
+               width: 70%;
+               max-width: 600px;
+               text-align: center;
+               position: relative;
+               animation: fadeIn 0.3s ease-in-out;
+               max-height: none;
+               overflow: hidden;
+               display: grid;
+               grid-template-columns: 30% 70%;
+               grid-template-areas:
+                    "image header"
+                    "image description"
+                    "image price"
+                    "options options"
+                    "button button";
+               align-items: start;
+               gap: 5px;
+               box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+          }
+
+          /* Position elements in the grid */
+          .modal-content img {
+               width: 90%;
+               grid-area: image;
+               border-radius: 12px;
+               margin: 0 auto;
+          }
+
+          .modal-content h3 {
+               grid-area: header;
+               margin: 0;
+               text-align: left;
+               font-size: 1.2rem;
+          }
+
+          .modal-content #modal-description {
+               grid-area: description;
+               text-align: left;
+               margin: 5px 0;
+               font-size: 0.9rem;
+          }
+
+          .modal-content #modal-price {
+               grid-area: price;
+               text-align: left;
+               margin: 5px 0;
+               font-size: 1.1rem;
+          }
+
+          .customization-container {
+               grid-area: options;
+               display: grid;
+               grid-template-columns: repeat(2, 1fr);
+               gap: 5px;
+               margin: 5px 0;
+          }
+
+          .add-to-cart-button {
+               grid-area: button;
+               margin-top: 10px;
+               background-color: #bc9f7d;
+               color: white;
+               border: none;
+               padding: 12px 20px;
+               border-radius: 8px;
+               cursor: pointer;
+               font-size: 16px;
+               transition: background-color 0.3s;
+          }
+
+          .add-to-cart-button:hover {
+               background-color: #4a332f;
+          }
+
+          .close {
+               position: absolute;
+               top: 10px;
+               right: 15px;
+               color: #aaa;
+               font-size: 24px;
+               font-weight: bold;
+               cursor: pointer;
+               z-index: 1001;
+               background-color: rgba(255, 255, 255, 0.8);
+               width: 30px;
+               height: 30px;
+               border-radius: 50%;
+               display: flex;
+               align-items: center;
+               justify-content: center;
+          }
+
+          .close:hover,
+          .close:focus {
+               color: black;
+               background-color: rgba(255, 255, 255, 1);
+          }
+
+          @keyframes fadeIn {
+               from {
+                    opacity: 0;
+                    transform: translateY(-30px);
+               }
+
+               to {
+                    opacity: 1;
+                    transform: translateY(0);
+               }
+          }
+
+          /* Customization Options Styling */
+          .customization-group {
+               margin-bottom: 5px;
+               border-bottom: 1px solid #f0f0f0;
+               padding-bottom: 3px;
+          }
+
+          .customization-title {
+               font-weight: bold;
+               font-size: 40px;
+               color: #4a332f;
+               margin-bottom: 4px;
+               display: flex;
+               align-items: center;
+               text-align: left;
+               font-size: 0.9rem;
+          }
+
+          .customization-title i {
+               margin-right: 8px;
+               font-size: 0.8rem;
+          }
+
+          .customization-option {
+               display: flex;
+               align-items: center;
+               margin: 2px 0;
+               padding: 3px;
+               border-radius: 6px;
+               transition: background-color 0.2s;
+               text-align: left;
+               font-size: 0.85rem;
+          }
+
+          .customization-option:hover {
+               background-color: #dfd8cd;
+          }
+
+          .customization-option input[type="radio"] {
+               margin-right: 7px;
+          }
+
+          .customization-option label {
+               flex-grow: 1;
+               cursor: pointer;
+               font-size: 15px;
+          }
+
+          .customization-price {
+               color: #888;
+               font-size: 0.8em;
+               margin-left: 5px;
+          }
+
+          @keyframes slideDown {
+               from {
+                    opacity: 0;
+                    transform: translateY(-10px);
+               }
+
+               to {
+                    opacity: 1;
+                    transform: translateY(0);
+               }
+          }
+
+          .customization-group {
+               animation: slideDown 0.3s ease-out forwards;
+          }
+
+          .footer-container {
+               background-color: #bc9f7d;
+               padding: 0;
+               width: 100%;
+          }
+
+          .main-footer {
+               background-color: #dfd8cd;
+          }
+
+          .social-section {
+               text-align: center;
+               padding: 20px 0;
+          }
+
+          .social-title {
+               color: #fff;
+               font-weight: bold;
+               font-size: 1.2rem;
+               margin-bottom: 15px;
+          }
+
+          .social-icons {
+               display: flex;
+               justify-content: center;
+               gap: 15px;
+          }
+
+          .social-icon {
+               background-color: #fff;
+               color: #a27246;
+               width: 40px;
+               height: 40px;
+               border-radius: 50%;
+               display: flex;
+               align-items: center;
+               justify-content: center;
+               font-size: 1.3rem;
+               text-decoration: none;
+               transition: all 0.3s ease;
+          }
+
+          .social-icon:hover {
+               transform: translateY(-5px);
+               background-color: whitesmoke;
+               color: #4a332f;
+          }
+
+          .main-footer {
+               display: flex;
+               justify-content: space-between;
+               align-items: center;
+               padding: 20px 10%;
+               border-top: 1px solid #d0d6e0;
+          }
+
+          .company-info {
+               text-align: left;
+               color: #555;
+          }
+
+          .company-name {
+               font-weight: bold;
+               color: #4a332f;
+               font-size: 1.1rem;
+               margin-bottom: 5px;
+          }
+
+          .company-details {
+               color: #555;
+               font-size: 0.9rem;
+               margin: 3px 0;
+          }
+
+          .company-copyright {
+               color: #555;
+               font-size: 0.9rem;
+          }
+
+          .footer-logo {
+               width: 35px;
+               height: auto;
+          }
+
+          .footer-link {
+               display: block;
+               color: #555;
+               text-decoration: none;
+               margin: 10px 0;
+               font-size: 0.9rem;
+               transition: all 0.3s ease;
+               text-align: right;
+          }
+
+          .footer-link:hover {
+               color: #4a332f;
+               transform: translateX(-5px);
+          }
+
+          .footer-link:hover {
+               text-decoration: underline;
+          }
+
+          @media (max-width: 768px) {
+               body {
+                    overflow-x: hidden;
+               }
+
+               .navbar {
+                    flex-direction: row;
+                    gap: 10px;
+                    padding: 10px;
+               }
+
+               .nav-button {
+                    margin: 5px 0;
+                    font-size: 14px;
+               }
+
+               .container {
+                    flex-direction: column;
+                    align-items: center;
+               }
+
+               .content {
+                    margin-left: 0%;
+               }
+
+               .sidebar {
+                    width: 100%;
+                    text-align: center;
+                    padding: 10px;
+               }
+
+               .sidebar-heading {
+                    width: 100%;
+               }
+
+               .sidebar ul {
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: center;
+               }
+
+               .sidebar ul li {
+                    display: inline-block;
+                    margin: 5px;
+               }
+
+               .sidebar ul li a {
+                    display: inline-block;
+                    text-align: center;
+                    padding: 6px 12px;
+               }
+
+               .menu {
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 20px;
+                    padding: 10px;
+                    justify-items: center;
+               }
+
+               .menu-item {
+                    width: 90%;
+                    max-width: 300px;
+                    margin: 0 auto;
+                    padding: 15px;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                    border-radius: 16px;
+                    background-color: #fff;
+                    text-align: center;
+               }
+
+               .menu-item img {
+                    width: 100%;
+                    height: auto;
+                    max-height: 160px;
+                    object-fit: contain;
+               }
+
+               .menu-item h3 {
+                    font-size: 16px;
+                    margin-top: 10px;
+               }
+
+               .menu-item:hover {
+                    transform: scale(1.05);
+               }
+
+               .menu-item:hover img {
+                    transform: scale(1.1);
+               }
+
+
+               /* Enhanced Modal Fixes */
+               .modal {
+                    padding: 10px;
+                    box-sizing: border-box;
+               }
+
+               .modal-content {
+                    width: 90% !important;
+                    max-width: 400px !important;
+                    padding: 15px !important;
+                    margin: 5% auto !important;
+                    max-height: calc(100vh - 60px) !important;
+                    overflow-y: auto !important;
+                    display: flex !important;
+                    flex-direction: column !important;
+                    grid-template-columns: none !important;
+                    grid-template-areas: none !important;
+                    box-sizing: border-box;
+               }
+
+               .modal-content img {
+                    width: 60% !important;
+                    max-width: 120px !important;
+                    height: auto !important;
+                    margin: 0 auto 10px auto !important;
+                    border-radius: 8px;
+                    object-fit: cover;
+               }
+
+               .modal-content h3 {
+                    text-align: center !important;
+                    font-size: 16px !important;
+                    margin: 0 0 8px 0 !important;
+                    line-height: 1.3;
+               }
+
+               .modal-content #modal-description {
+                    text-align: center !important;
+                    font-size: 13px !important;
+                    margin: 0 0 8px 0 !important;
+                    line-height: 1.4;
+                    color: #666;
+               }
+
+               .modal-content #modal-price {
+                    text-align: center !important;
+                    font-size: 18px !important;
+                    font-weight: bold !important;
+                    margin: 0 0 15px 0 !important;
+                    color: #333;
+               }
+
+               /* Customization Container */
+               .customization-container {
+                    display: flex !important;
+                    flex-direction: column !important;
+                    gap: 10px !important;
+                    grid-template-columns: none !important;
+                    flex: 1;
+                    overflow-y: auto;
+               }
+
+               .customization-group {
+                    margin-bottom: 10px;
+                    border-bottom: 1px solid #eee;
+                    padding-bottom: 8px;
+               }
+
+               .customization-group:last-child {
+                    border-bottom: none;
+                    margin-bottom: 15px;
+               }
+
+               .customization-title {
+                    font-size: 14px !important;
+                    font-weight: bold;
+                    color: #bc9f7d;
+                    margin-bottom: 8px;
+                    padding: 5px 0;
+                    border-bottom: 1px solid #f0f0f0;
+               }
+
+               .customization-title i {
+                    margin-right: 6px;
+                    font-size: 12px;
+               }
+
+               .customization-option {
+                    display: flex !important;
+                    align-items: center !important;
+                    padding: 6px 8px !important;
+                    margin: 3px 0 !important;
+                    background-color: #f9f9f9;
+                    border-radius: 6px;
+                    border: 1px solid #eee;
+                    font-size: 13px !important;
+                    transition: all 0.2s ease;
+               }
+
+               .customization-option:hover {
+                    background-color: #f0f8ff;
+                    border-color: #dfd8cd;
+               }
+
+               .customization-option input[type="radio"] {
+                    width: 18px !important;
+                    height: 18px !important;
+                    margin-right: 10px !important;
+                    flex-shrink: 0;
+                    accent-color: #ad175d;
+               }
+
+               .customization-option label {
+                    flex: 1 !important;
+                    font-size: 13px !important;
+                    cursor: pointer;
+                    line-height: 1.3;
+               }
+
+               .customization-price {
+                    font-size: 12px !important;
+                    color: #666;
+                    min-width: 60px !important;
+                    text-align: right;
+                    flex-shrink: 0;
+                    font-weight: 500;
+               }
+
+               .add-to-cart-button {
+                    width: 100% !important;
+                    padding: 12px !important;
+                    margin-top: 15px !important;
+                    font-size: 15px !important;
+                    font-weight: bold;
+                    border-radius: 8px;
+                    flex-shrink: 0;
+               }
+
+               .close {
+                    position: absolute !important;
+                    top: 8px !important;
+                    right: 8px !important;
+                    width: 28px !important;
+                    height: 28px !important;
+                    font-size: 18px !important;
+                    background-color: rgba(255, 255, 255, 0.95);
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+                    z-index: 1003;
+                    color: #666;
+               }
+
+               .close:hover {
+                    background-color: #fff;
+                    color: #333;
+               }
+
+               .main-footer {
+                    flex-direction: column;
+                    text-align: center;
+                    padding: 20px;
+               }
+
+               .footer-links {
+                    text-align: center;
+                    margin-top: 15px;
+               }
+
+               .company-info {
+                    text-align: center;
+               }
+
+               .social-section {
+                    padding: 15px 10px;
+               }
+
+               .social-icons {
+                    flex-wrap: wrap;
+                    gap: 10px;
+                    justify-content: center;
+               }
+
+               .main-footer {
+                    flex-direction: column;
+                    text-align: center;
+                    padding: 20px;
+               }
+
+               .main-footer a {
+                    text-align: center;
+               }
+
+               .footer-links {
+                    text-align: center;
+                    margin-top: 15px;
+               }
+
+               .company-info {
+                    text-align: center;
+               }
+
+               .social-section {
+                    padding: 15px 10px;
+               }
+
+               .social-icons {
+                    flex-wrap: wrap;
+                    gap: 10px;
+                    justify-content: center;
+               }
+          }
+     </style>
+</head>
+
+<body>
+     <nav class="navbar">
+          <a href="menu.html" class="nav-button"> Menu </a>
+          <a href="index.html" class="logo"><img src="https://i.ibb.co/Mkf2DZ4c/logo-lotus.png" alt="LOGO"
+                    style="height: 65px; border-radius: 8px;"></a>
+          <a href="cart.html" class="social-icon">
+               <i class="fa fa-cart-shopping"></i>
+          </a>
+     </nav>
+     <div class="container">
+          <div class="sidebar">
+               <div class="sidebar-heading">DRINKS</div>
+               <ul>
+                    <li><a href="coffee.html">Coffee</a></li>
+                    <li><a href="frappe.html">Frappé</a></li>
+               </ul>
+
+               <div class="sidebar-heading">FOOD</div>
+               <ul>
+                    <li><a href="pastry.html">Pastry</a></li>
+                    <li><a href="dessert.html">Dessert</a></li>
+               </ul>
+          </div>
+
+          <div class="content">
+               <h1> DRINKS </h1>
+               <h2> Frappé </h2>
+               <div class="menu">
+                    <div class="menu-item" onclick="openModal('Berry Cheesecake')">
+                         <img src="https://i.ibb.co/hFx1mdt9/Berry-Cheesecake.png" alt="Berry-Cheesecake">
+                         <h3> Berry Cheesecake </h3>
+                         <h4>₱180.00</h4>
+                    </div>
+                    <div class="menu-item" onclick="openModal('Java Chip')">
+                         <img src="https://i.ibb.co/6ch2wwtk/Java-Chip.png" alt="Java-Chip">
+                         <h3>Java Chip </h3>
+                         <h4>₱175.00</h4>
+                    </div>
+                    <div class="menu-item" onclick="openModal('Matcha Craze')">
+                         <img src="https://i.ibb.co/VpgpYFpv/Matcha-Craze.png" alt="Matcha-Craze">
+                         <h3>Matcha Craze</h3>
+                         <h4>₱185.00</h4>
+                    </div>
+                    <div class="menu-item" onclick="openModal('Espresso Crush')">
+                         <img src="https://i.ibb.co/zqWdk53/Espresso-Crush.png" alt="Espresso-Crush">
+                         <h3> Espresso Crush </h3>
+                         <h4>₱190.00</h4>
+                    </div>
+
+                    <div class="menu-item" onclick="openModal('Salted Caramel')">
+                         <img src="https://i.ibb.co/93tXs30r/Salted-Caramel.png" alt="Salted-Caramel">
+                         <h3> Salted Caramel </h3>
+                         <h4>₱180.00</h4>
+                    </div>
+
+                    <div class="menu-item" onclick="openModal('Choco Chip')">
+                         <img src="https://i.ibb.co/VZNgbSv/Choco-Chip.png" alt="Choco-Chip">
+                         <h3>Choco Chip</h3>
+                         <h4>₱155.00</h4>
+                    </div>
+                    <div class="menu-item" onclick="openModal('Irish Cream')">
+                         <img src="https://i.ibb.co/JRfCHxmq/Irish-Cream.png" alt="Irish-Cream">
+                         <h3>Irish Cream</h3>
+                         <h4>₱155.00</h4>
+                    </div>
+                    <div class="menu-item" onclick="openModal('Java Cocoa')">
+                         <img src="https://i.ibb.co/4nTDvVXb/Java-Cocoa.png" alt="Java-Cocoa">
+                         <h3>Java Cocoa</h3>
+                         <h4>₱145.00</h4>
+                    </div>
+                    <div class="menu-item" onclick="openModal('Triple Java Jelly')">
+                         <img src="https://i.ibb.co/0jYhz5hv/Triple-Java-Jelly.png" alt="Triple-Java-Jelly">
+                         <h3>Triple Java Jelly</h3>
+                         <h4>₱160.00</h4>
+                    </div>
+               </div>
+          </div>
+     </div>
+     <div class="footer-container">
+          <div class="social-section">
+               <h3 class="social-title">Follow us on</h3>
+               <div class="social-icons">
+                    <a href="https://www.instagram.com/lotuscoffee.ph?igsh=ZzB4ZWxzY2M1MjRr" class="social-icon">
+                         <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.facebook.com/profile.php?id=61576273525574" class="social-icon">
+                         <i class="fab fa-facebook"></i>
+                    </a>
+               </div>
+          </div>
+
+          <div class="main-footer">
+               <div class="company-info">
+                    <div class="company-name">LOTUS COFFEE PHILIPPINES INC.</div>
+                    <div class="company-details">Company registration no: 635-381-780-00000</div>
+                    <div class="company-info">Recto, Manila</div>
+                    <div class="company-info">Email: lotusbrewcafe@gmail.com</div>
+                    <div class="company-copyright">COPYRIGHT 2025 © LOTUS COFFEE</div>
+               </div>
+               <div class="footer-links">
+                    <a href="terms.html" class="footer-link">Privacy Policy</a>
+                    <a href="terms.html" class="footer-link">Terms & Conditions</a>
+                    <a href="terms.html" class="footer-link">Customer Support</a>
+                    <a href="return.html" class="footer-link">Refund Policy</a>
+                    <a href="faq.html" class="footer-link">FAQS</a>
+               </div>
+          </div>
+     </div>
+
+     <div id="modal" class="modal">
+          <div class="modal-content">
+               <span class="close" onclick="closeModal()">&times;</span>
+               <img id="modal-img" src="/placeholder.svg" alt="">
+               <h3 id="modal-title"></h3>
+               <p id="modal-description"></p>
+               <p id="modal-price" style="font-weight:bold;"></p>
+
+               <div id="customization-options" class="customization-container"></div>
+               <button class="add-to-cart-button" onclick="addToCart()">Add to Cart</button>
+          </div>
+     </div>
+
+     <script>
+          const frappeData = {
+               "Berry Cheesecake": {
+                    img: "Berry Cheesecake.png",
+                    desc: "A creamy blend of cheesecake and mixed berries topped with whipped cream.",
+                    price: "₱180.00",
+                    customizations: {
+                         "Milk": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "Dairy Milk", price: "+₱0.00" },
+                                   { name: "Soy Milk", price: "+₱30.00" },
+                                   { name: "Oat Milk", price: "+₱45.00" },
+                                   { name: "Coconut Milk", price: "+₱45.00" }
+                              ]
+                         },
+                         "Coffee Bean": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "No Shot" },
+                                   { name: "Add Shot", price: "+₱25.00" },
+                                   { name: "BOSS", price: "+₱25.00" },
+                                   { name: "KONA", price: "+₱25.00" }
+                              ]
+                         },
+                         "Coffee": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "Standard" },
+                                   { name: "Add Shot", price: "+₱25.00" }
+                              ]
+                         },
+                         "Sweetness": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "Regular Sweetness" },
+                                   { name: "Less Sweet" },
+                                   { name: "More Sweet" }
+                              ]
+                         },
+
+                         "Topping": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "No Topping" },
+                                   { name: "Add Coffee Jelly", price: "+₱20.00" },
+                                   { name: "Add Chocolate Chip", price: "+₱20.00" }
+                              ]
+                         },
+
+                         "Syrup": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "Salted Caramel Syrup", price: "+₱20.00" },
+                                   { name: "French Vanilla Syrup", price: "+₱20.00" }
+                              ]
+                         },
+
+                         "Drizzle": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "Caramel Drizzle", price: "+₱20.00" },
+                                   { name: "Gula Melaka Drizzle", price: "+₱20.00" }
+                              ]
+                         }
+                    }
+               },
+               "Java Chip": {
+                    img: "Java Chip.png",
+                    desc: "Rich coffee blended with chocolate chips and a mocha drizzle.",
+                    price: "₱175.00",
+                    customizations: {
+                         "Milk": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "Dairy Milk", price: "+₱0.00" },
+                                   { name: "Soy Milk", price: "+₱30.00" },
+                                   { name: "Oat Milk", price: "+₱45.00" },
+                                   { name: "Coconut Milk", price: "+₱45.00" }
+                              ]
+                         },
+                         "Coffee Bean": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "No Shot" },
+                                   { name: "Add Shot", price: "+₱25.00" },
+                                   { name: "BOSS", price: "+₱25.00" },
+                                   { name: "KONA", price: "+₱25.00" }
+                              ]
+                         },
+                         "Coffee": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "Standard" },
+                                   { name: "Add Shot", price: "+₱25.00" }
+                              ]
+                         },
+                         "Sweetness": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "Regular Sweetness" },
+                                   { name: "Less Sweet" },
+                                   { name: "More Sweet" }
+                              ]
+                         },
+
+                         "Topping": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "No Topping" },
+                                   { name: "Add Coffee Jelly", price: "+₱20.00" },
+                                   { name: "Add Chocolate Chip", price: "+₱20.00" }
+                              ]
+                         },
+
+                         "Syrup": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "Salted Caramel Syrup", price: "+₱20.00" },
+                                   { name: "French Vanilla Syrup", price: "+₱20.00" }
+                              ]
+                         },
+
+                         "Drizzle": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "Caramel Drizzle", price: "+₱20.00" },
+                                   { name: "Gula Melaka Drizzle", price: "+₱20.00" }
+                              ]
+                         }
+                    }
+               },
+               "Matcha Craze": {
+                    img: "Matcha Craze.png",
+                    desc: "Earthy matcha and milk perfectly balanced with sweet cream.",
+                    price: "₱185.00",
+                    customizations: {
+                         "Milk": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "Dairy Milk", price: "+₱0.00" },
+                                   { name: "Soy Milk", price: "+₱30.00" },
+                                   { name: "Oat Milk", price: "+₱45.00" },
+                                   { name: "Coconut Milk", price: "+₱45.00" }
+                              ]
+                         },
+                         "Coffee Bean": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "No Shot" },
+                                   { name: "Add Shot", price: "+₱25.00" },
+                                   { name: "BOSS", price: "+₱25.00" },
+                                   { name: "KONA", price: "+₱25.00" }
+                              ]
+                         },
+                         "Coffee": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "Standard" },
+                                   { name: "Add Shot", price: "+₱25.00" }
+                              ]
+                         },
+                         "Sweetness": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "Regular Sweetness" },
+                                   { name: "Less Sweet" },
+                                   { name: "More Sweet" }
+                              ]
+                         },
+
+                         "Topping": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "No Topping" },
+                                   { name: "Add Coffee Jelly", price: "+₱20.00" },
+                                   { name: "Add Chocolate Chip", price: "+₱20.00" }
+                              ]
+                         },
+
+                         "Syrup": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "Salted Caramel Syrup", price: "+₱20.00" },
+                                   { name: "French Vanilla Syrup", price: "+₱20.00" }
+                              ]
+                         },
+
+                         "Drizzle": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "Caramel Drizzle", price: "+₱20.00" },
+                                   { name: "Gula Melaka Drizzle", price: "+₱20.00" }
+                              ]
+                         }
+                    }
+               },
+               "Espresso Crush": {
+                    img: "Espresso Crush.png",
+                    desc: "A bold frappe for coffee lovers – double espresso, crushed ice, and cream.",
+                    price: "₱190.00",
+                    customizations: {
+                         "Milk": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "Dairy Milk", price: "+₱0.00" },
+                                   { name: "Soy Milk", price: "+₱30.00" },
+                                   { name: "Oat Milk", price: "+₱45.00" },
+                                   { name: "Coconut Milk", price: "+₱45.00" }
+                              ]
+                         },
+                         "Coffee Bean": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "No Shot" },
+                                   { name: "Add Shot", price: "+₱25.00" },
+                                   { name: "BOSS", price: "+₱25.00" },
+                                   { name: "KONA", price: "+₱25.00" }
+                              ]
+                         },
+                         "Coffee": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "Standard" },
+                                   { name: "Add Shot", price: "+₱25.00" }
+                              ]
+                         },
+                         "Sweetness": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "Regular Sweetness" },
+                                   { name: "Less Sweet" },
+                                   { name: "More Sweet" }
+                              ]
+                         },
+
+                         "Topping": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "No Topping" },
+                                   { name: "Add Coffee Jelly", price: "+₱20.00" },
+                                   { name: "Add Chocolate Chip", price: "+₱20.00" }
+                              ]
+                         },
+
+                         "Syrup": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "Salted Caramel Syrup", price: "+₱20.00" },
+                                   { name: "French Vanilla Syrup", price: "+₱20.00" }
+                              ]
+                         },
+
+                         "Drizzle": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "Caramel Drizzle", price: "+₱20.00" },
+                                   { name: "Gula Melaka Drizzle", price: "+₱20.00" }
+                              ]
+                         }
+                    }
+               },
+               "Salted Caramel": {
+                    img: "Salted Caramel.png",
+                    desc: "Sweet and salty perfection with buttery caramel blended smoothly.",
+                    price: "₱180.00",
+                    customizations: {
+                         "Milk": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "Dairy Milk", price: "+₱0.00" },
+                                   { name: "Soy Milk", price: "+₱30.00" },
+                                   { name: "Oat Milk", price: "+₱45.00" },
+                                   { name: "Coconut Milk", price: "+₱45.00" }
+                              ]
+                         },
+                         "Coffee Bean": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "No Shot" },
+                                   { name: "Add Shot", price: "+₱25.00" },
+                                   { name: "BOSS", price: "+₱25.00" },
+                                   { name: "KONA", price: "+₱25.00" }
+                              ]
+                         },
+                         "Coffee": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "Standard" },
+                                   { name: "Add Shot", price: "+₱25.00" }
+                              ]
+                         },
+                         "Sweetness": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "Regular Sweetness" },
+                                   { name: "Less Sweet" },
+                                   { name: "More Sweet" }
+                              ]
+                         },
+
+                         "Topping": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "No Topping" },
+                                   { name: "Add Coffee Jelly", price: "+₱20.00" },
+                                   { name: "Add Chocolate Chip", price: "+₱20.00" }
+                              ]
+                         },
+
+                         "Syrup": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "Salted Caramel Syrup", price: "+₱20.00" },
+                                   { name: "French Vanilla Syrup", price: "+₱20.00" }
+                              ]
+                         },
+
+                         "Drizzle": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "Caramel Drizzle", price: "+₱20.00" },
+                                   { name: "Gula Melaka Drizzle", price: "+₱20.00" }
+                              ]
+                         }
+                    }
+               },
+               "Choco Chip": {
+                    img: "Choco Chip.png",
+                    desc: "Get ready for the ultimate chocolate fix: a luscious blend of rich chocolate drink, melty choco chips, and a generous sprinkle of chocolate powder – blended to pure perfection.",
+                    price: "₱155.00",
+                    customizations: {
+                         "Milk": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "Dairy Milk", price: "+₱0.00" },
+                                   { name: "Soy Milk", price: "+₱30.00" },
+                                   { name: "Oat Milk", price: "+₱45.00" },
+                                   { name: "Coconut Milk", price: "+₱45.00" }
+                              ]
+                         },
+                         "Coffee Bean": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "No Shot" },
+                                   { name: "Add Shot", price: "+₱25.00" },
+                                   { name: "BOSS", price: "+₱25.00" },
+                                   { name: "KONA", price: "+₱25.00" }
+                              ]
+                         },
+                         "Coffee": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "Standard" },
+                                   { name: "Add Shot", price: "+₱25.00" }
+                              ]
+                         },
+                         "Sweetness": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "Regular Sweetness" },
+                                   { name: "Less Sweet" },
+                                   { name: "More Sweet" }
+                              ]
+                         },
+
+                         "Topping": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "No Topping" },
+                                   { name: "Add Coffee Jelly", price: "+₱20.00" },
+                                   { name: "Add Chocolate Chip", price: "+₱20.00" }
+                              ]
+                         },
+
+                         "Syrup": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "Salted Caramel Syrup", price: "+₱20.00" },
+                                   { name: "French Vanilla Syrup", price: "+₱20.00" }
+                              ]
+                         },
+
+                         "Drizzle": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "Caramel Drizzle", price: "+₱20.00" },
+                                   { name: "Gula Melaka Drizzle", price: "+₱20.00" }
+                              ]
+                         }
+                    }
+               },
+               "Irish Cream": {
+                    img: "Irish Cream.png",
+                    desc: "A luxurious blend of French Vanilla and Irish Cream, masterfully chilled and whipped into a creamy, velvety frost — topped with a cloud of rich whipped cream for the perfect finishing touch.",
+                    price: "₱155.00",
+                    customizations: {
+                         "Milk": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "Dairy Milk", price: "+₱0.00" },
+                                   { name: "Soy Milk", price: "+₱30.00" },
+                                   { name: "Oat Milk", price: "+₱45.00" },
+                                   { name: "Coconut Milk", price: "+₱45.00" }
+                              ]
+                         },
+                         "Coffee Bean": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "No Shot" },
+                                   { name: "Add Shot", price: "+₱25.00" },
+                                   { name: "BOSS", price: "+₱25.00" },
+                                   { name: "KONA", price: "+₱25.00" }
+                              ]
+                         },
+                         "Coffee": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "Standard" },
+                                   { name: "Add Shot", price: "+₱25.00" }
+                              ]
+                         },
+                         "Sweetness": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "Regular Sweetness" },
+                                   { name: "Less Sweet" },
+                                   { name: "More Sweet" }
+                              ]
+                         },
+
+                         "Topping": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "No Topping" },
+                                   { name: "Add Coffee Jelly", price: "+₱20.00" },
+                                   { name: "Add Chocolate Chip", price: "+₱20.00" }
+                              ]
+                         },
+
+                         "Syrup": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "Salted Caramel Syrup", price: "+₱20.00" },
+                                   { name: "French Vanilla Syrup", price: "+₱20.00" }
+                              ]
+                         },
+
+                         "Drizzle": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "Caramel Drizzle", price: "+₱20.00" },
+                                   { name: "Gula Melaka Drizzle", price: "+₱20.00" }
+                              ]
+                         }
+                    }
+               },
+               "Java Cocoa": {
+                    img: "Java Cocoa.png",
+                    desc: "Dark, daring, and dangerously smooth. Pure Australian cocoa meets a shot of specialty coffee, ice-blended into a rich, velvety treat. It's chocolate-forward with a stealthy caffeine kick — just enough to keep you hooked and coming back for more.",
+                    price: "₱145.00",
+                    customizations: {
+                         "Milk": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "Dairy Milk", price: "+₱0.00" },
+                                   { name: "Soy Milk", price: "+₱30.00" },
+                                   { name: "Oat Milk", price: "+₱45.00" },
+                                   { name: "Coconut Milk", price: "+₱45.00" }
+                              ]
+                         },
+                         "Coffee Bean": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "No Shot" },
+                                   { name: "Add Shot", price: "+₱25.00" },
+                                   { name: "BOSS", price: "+₱25.00" },
+                                   { name: "KONA", price: "+₱25.00" }
+                              ]
+                         },
+                         "Coffee": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "Standard" },
+                                   { name: "Add Shot", price: "+₱25.00" }
+                              ]
+                         },
+                         "Sweetness": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "Regular Sweetness" },
+                                   { name: "Less Sweet" },
+                                   { name: "More Sweet" }
+                              ]
+                         },
+
+                         "Topping": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "No Topping" },
+                                   { name: "Add Coffee Jelly", price: "+₱20.00" },
+                                   { name: "Add Chocolate Chip", price: "+₱20.00" }
+                              ]
+                         },
+
+                         "Syrup": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "Salted Caramel Syrup", price: "+₱20.00" },
+                                   { name: "French Vanilla Syrup", price: "+₱20.00" }
+                              ]
+                         },
+
+                         "Drizzle": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "Caramel Drizzle", price: "+₱20.00" },
+                                   { name: "Gula Melaka Drizzle", price: "+₱20.00" }
+                              ]
+                         }
+                    }
+
+               },
+               "Triple Java Jelly": {
+                    img: "Triple Java Jelly.png",
+                    desc: "Meet the triple threat of coffee indulgence. Crunchy choco chips bring the sweet, bold espresso brings the buzz, and those bouncy coffee jellies? Pure, playful magic. It's texture, taste, and caffeine — all in one legendary sip.",
+                    price: "₱160.00",
+                    customizations: {
+                         "Milk": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "Dairy Milk", price: "+₱0.00" },
+                                   { name: "Soy Milk", price: "+₱30.00" },
+                                   { name: "Oat Milk", price: "+₱45.00" },
+                                   { name: "Coconut Milk", price: "+₱45.00" }
+                              ]
+                         },
+                         "Coffee Bean": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "No Shot" },
+                                   { name: "Add Shot", price: "+₱25.00" },
+                                   { name: "BOSS", price: "+₱25.00" },
+                                   { name: "KONA", price: "+₱25.00" }
+                              ]
+                         },
+                         "Coffee": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "Standard" },
+                                   { name: "Add Shot", price: "+₱25.00" }
+                              ]
+                         },
+                         "Sweetness": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "Regular Sweetness" },
+                                   { name: "Less Sweet" },
+                                   { name: "More Sweet" }
+                              ]
+                         },
+
+                         "Topping": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "No Topping" },
+                                   { name: "Add Coffee Jelly", price: "+₱20.00" },
+                                   { name: "Add Chocolate Chip", price: "+₱20.00" }
+                              ]
+                         },
+
+                         "Syrup": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "Salted Caramel Syrup", price: "+₱20.00" },
+                                   { name: "French Vanilla Syrup", price: "+₱20.00" }
+                              ]
+                         },
+
+                         "Drizzle": {
+                              type: "radio",
+                              required: true,
+                              options: [
+                                   { name: "Caramel Drizzle", price: "+₱20.00" },
+                                   { name: "Gula Melaka Drizzle", price: "+₱20.00" }
+                              ]
+                         }
+                    }
+               }
+          };
+
+          let currentItem = "";
+
+          function updateTotalPrice() {
+               const item = frappeData[currentItem];
+               let basePrice = parseFloat(item.price.replace(/[₱,]/g, ""));
+               let total = basePrice;
+
+               if (item.customizations) {
+                    for (const [groupName, group] of Object.entries(item.customizations)) {
+                         const inputName = `${groupName}`;
+                         const selected = document.querySelector(`input[name="${inputName}"]:checked`);
+                         if (selected) {
+                              const priceText = selected.closest('.customization-option')
+                                   .querySelector('.customization-price')?.innerText || "+₱0.00";
+                              const addonPrice = parseFloat(priceText.replace(/[₱+]/g, "")) || 0;
+                              total += addonPrice;
+                         }
+                    }
+               }
+
+               document.getElementById("modal-price").innerText = `₱${total.toFixed(2)}`;
+          }
+
+          function openModal(name) {
+               currentItem = name;
+               const item = frappeData[name];
+               document.getElementById("modal-img").src = item.img;
+               document.getElementById("modal-title").innerText = name;
+               document.getElementById("modal-description").innerText = item.desc;
+
+               const optionsContainer = document.getElementById("customization-options");
+               optionsContainer.innerHTML = "";
+
+               if (item.customizations) {
+                    // Count customization groups to adjust layout
+                    const numGroups = Object.keys(item.customizations).length;
+                    const modalContent = document.querySelector('.modal-content');
+
+                    if (numGroups > 4) {
+                         // For items with many customization options, use a more compact layout
+                         modalContent.style.gridTemplateColumns = "25% 75%";
+                         document.querySelector('.customization-container').style.gridTemplateColumns = "repeat(3, 1fr)";
+                    } else {
+                         // Reset to default for items with fewer options
+                         modalContent.style.gridTemplateColumns = "30% 70%";
+                         document.querySelector('.customization-container').style.gridTemplateColumns = "repeat(2, 1fr)";
+                    }
+
+                    for (const [groupName, group] of Object.entries(item.customizations)) {
+                         const groupElement = document.createElement("div");
+                         groupElement.className = "customization-group";
+
+                         const titleElement = document.createElement("div");
+                         titleElement.className = "customization-title";
+                         titleElement.innerHTML = `<i class="fas fa-chevron-right"></i> ${groupName}`;
+                         groupElement.appendChild(titleElement);
+
+                         group.options.forEach((option, idx) => {
+                              const optionId = `${name}-${groupName}-${option.name.replace(/\s+/g, '-')}`;
+                              const priceText = option.price ?? "+₱0.00";
+
+                              const optionElement = document.createElement("div");
+                              optionElement.className = "customization-option";
+
+                              optionElement.innerHTML = `
+                         <input type="${group.type}" 
+                              id="${optionId}" 
+                              name="${groupName}" 
+                              value="${option.name}" 
+                              ${group.required ? 'required' : ''}>
+                         <label for="${optionId}">${option.name}</label>
+                         <span class="customization-price">${priceText}</span>
+          `;
+
+                              groupElement.appendChild(optionElement);
+                         });
+
+                         optionsContainer.appendChild(groupElement);
+                    }
+
+                    // Add event listeners to update price on change
+                    document.querySelectorAll('#customization-options input[type="radio"]').forEach(input => {
+                         input.addEventListener("change", updateTotalPrice);
+                    });
+               }
+
+               updateTotalPrice(); // Initial price
+               document.getElementById("modal").style.display = "flex";
+          }
+
+          function closeModal() {
+               document.getElementById("modal").style.display = "none";
+          }
+
+          function addToCart() {
+               const item = frappeData[currentItem];
+               let customizations = {};
+               let totalPrice = parseFloat(item.price.replace(/[₱,]/g, ""));
+
+               if (item.customizations) {
+                    for (const [groupName, group] of Object.entries(item.customizations)) {
+                         const selectedOption = document.querySelector(`input[name="${groupName}"]:checked`);
+                         if (selectedOption) {
+                              const optionText = selectedOption.value;
+                              const priceElement = selectedOption.closest('.customization-option').querySelector('.customization-price');
+                              const optionPrice = priceElement ? parseFloat(priceElement.innerText.replace(/[₱+]/g, "")) : 0;
+
+                              totalPrice += optionPrice;
+
+                              customizations[groupName] = {
+                                   option: optionText,
+                                   price: `+₱${optionPrice.toFixed(2)}`
+                              };
+                         }
+                    }
+               }
+
+               let cart = JSON.parse(localStorage.getItem("cart")) || [];
+               cart.push({
+                    name: currentItem,
+                    price: `₱${totalPrice.toFixed(2)}`,
+                    img: item.img,
+                    customizations: Object.keys(customizations).length > 0 ? customizations : null
+               });
+
+               localStorage.setItem("cart", JSON.stringify(cart));
+               alert(`${currentItem} added to cart!`);
+               closeModal();
+          }
+
+          // Add event listener to close modal when clicking outside
+          document.getElementById('modal').addEventListener('click', function (event) {
+               // If the click is directly on the modal background (not its children)
+               if (event.target === this) {
+                    closeModal();
+               }
+          });
+
+          // Add keyboard shortcut to close modal with Escape key
+          document.addEventListener('keydown', function (event) {
+               if (event.key === 'Escape' && document.getElementById('modal').style.display === 'flex') {
+                    closeModal();
+               }
+          });
+     </script>
+</body>
+
+</html>

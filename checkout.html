@@ -1,0 +1,1441 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Checkout</title>
+     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+     <link rel="icon" type="image/x-icon" href="https://i.ibb.co/7x9jFQtH/icon.png">
+     <!-- PayPal SDK - Replace with your actual client ID -->
+     <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=PHP&disable-funding=credit,card"></script>
+     <style>
+          * {
+               box-sizing: border-box;
+          }
+
+          body {
+               font-family: 'Poppins', sans-serif;
+               margin: 0;
+               line-height: 1.6;
+               color: #333;
+               background-color: #dfd8cd;
+          }
+
+          h1,
+          h2 {
+               color: #a27246;
+          }
+
+          h1 {
+               text-align: center;
+               border-bottom: 2px solid #6F4E37;
+               padding-bottom: 10px;
+               margin-bottom: 20px;
+          }
+
+          .checkout-container {
+               max-width: 800px;
+               margin: 0 auto;
+               padding: 0 15px;
+          }
+
+          .checkout-section {
+               background-color: white;
+               padding: 20px;
+               border-radius: 8px;
+               margin: 15px 0;
+               box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+          }
+
+          .checkout-tabs {
+               display: flex;
+               justify-content: center;
+               margin-bottom: 20px;
+          }
+
+          .checkout-tab {
+               padding: 10px 20px;
+               background-color: #f5f5f5;
+               border: 1px solid #ddd;
+               cursor: pointer;
+               margin: 0 5px;
+               border-radius: 5px 5px 0 0;
+               transition: all 0.3s ease;
+          }
+
+          .checkout-tab.active {
+               background-color: #bc9f7d;
+               color: white;
+               border-color: #4a332f;
+          }
+
+          .cart-preview {
+               margin-bottom: 20px;
+          }
+
+          .cart-item {
+               display: flex;
+               justify-content: space-between;
+               padding: 8px 0;
+               border-bottom: 1px solid #eee;
+          }
+
+          .total {
+               font-weight: bold;
+               font-size: 1.2em;
+               margin-top: 15px;
+               text-align: right;
+               color: #a27246;
+          }
+
+          .payment-methods {
+               margin: 20px 0;
+          }
+
+          .payment-option {
+               display: flex;
+               align-items: center;
+               margin: 10px 0;
+               padding: 15px;
+               border: 2px solid #ddd;
+               border-radius: 8px;
+               transition: all 0.3s ease;
+               cursor: pointer;
+               background-color: #fff;
+               position: relative;
+          }
+
+          .payment-option:hover {
+               background-color: #f9f9f9;
+               border-color: #bc9f7d;
+               transform: translateY(-2px);
+               box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          }
+
+          .payment-option.selected {
+               border-color: #bc9f7d;
+               background-color: #f8f6f3;
+               box-shadow: 0 4px 12px rgba(188, 159, 125, 0.3);
+          }
+
+          .payment-option input[type="radio"] {
+               margin-right: 15px;
+               transform: scale(1.3);
+               accent-color: #bc9f7d;
+          }
+
+          .payment-option-content {
+               display: flex;
+               align-items: center;
+               flex: 1;
+               justify-content: space-between;
+          }
+
+          .payment-option-text {
+               font-weight: 500;
+               color: #333;
+               font-size: 16px;
+          }
+
+          .payment-logo {
+               height: 35px;
+               margin-left: 15px;
+               vertical-align: middle;
+          }
+
+          .gcash-logo {
+               background: linear-gradient(45deg, #004CFF, #0066FF);
+               color: white;
+               padding: 8px 12px;
+               border-radius: 6px;
+               font-weight: bold;
+               font-size: 14px;
+          }
+
+          button {
+               background-color: #bc9f7d;
+               color: white;
+               padding: 15px 30px;
+               border: none;
+               border-radius: 8px;
+               cursor: pointer;
+               font-size: 16px;
+               font-weight: 500;
+               display: block;
+               margin: 20px auto;
+               transition: all 0.3s ease;
+               min-width: 200px;
+          }
+
+          button:hover {
+               background-color: #4a332f;
+               transform: translateY(-2px);
+               box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+          }
+
+          button:disabled {
+               background-color: #ccc;
+               cursor: not-allowed;
+               transform: none;
+               box-shadow: none;
+          }
+
+          .back-link {
+               display: inline-block;
+               margin-top: 15px;
+               color: #6F4E37;
+               text-decoration: none;
+               font-weight: 500;
+          }
+
+          .back-link:hover {
+               text-decoration: underline;
+          }
+
+          .shipping-fee {
+               background-color: #fff6f9;
+               padding: 15px;
+               border-radius: 8px;
+               margin: 15px 0;
+               border-left: 4px solid #6F4E37;
+          }
+
+          .error-message {
+               color: #dc3545;
+               margin-top: 10px;
+               display: none;
+               font-weight: 500;
+               padding: 10px;
+               background-color: #f8d7da;
+               border: 1px solid #f5c6cb;
+               border-radius: 5px;
+          }
+
+          input[type="text"],
+          input[type="tel"],
+          input[type="email"],
+          input[type="time"],
+          textarea {
+               width: 100%;
+               padding: 12px;
+               margin-top: 8px;
+               border: 2px solid #ddd;
+               border-radius: 6px;
+               font-size: 14px;
+               transition: border-color 0.3s ease;
+          }
+
+          input:focus,
+          textarea:focus {
+               outline: none;
+               border-color: #bc9f7d;
+               box-shadow: 0 0 0 3px rgba(188, 159, 125, 0.1);
+          }
+
+          label {
+               display: block;
+               margin-top: 15px;
+               font-weight: 500;
+               color: #333;
+          }
+
+          textarea {
+               height: 80px;
+               resize: vertical;
+          }
+
+          .form-group {
+               margin-bottom: 20px;
+          }
+
+          #orderConfirmation {
+               display: none;
+               text-align: center;
+               padding: 40px 20px;
+               background-color: white;
+               border-radius: 12px;
+               box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+               margin: 20px 0;
+          }
+
+          .confirmation-icon {
+               font-size: 80px;
+               color: #4CAF50;
+               margin-bottom: 20px;
+               animation: bounce 0.6s ease-in-out;
+          }
+
+          @keyframes bounce {
+
+               0%,
+               20%,
+               50%,
+               80%,
+               100% {
+                    transform: translateY(0);
+               }
+
+               40% {
+                    transform: translateY(-10px);
+               }
+
+               60% {
+                    transform: translateY(-5px);
+               }
+          }
+
+          .order-number {
+               font-weight: bold;
+               color: #a27246;
+               font-size: 1.3em;
+               margin: 15px 0;
+               padding: 10px;
+               background-color: #f8f6f3;
+               border-radius: 6px;
+               border: 1px dashed #bc9f7d;
+          }
+
+          .tracking-button {
+               display: inline-block;
+               background-color: #a27246;
+               color: white;
+               padding: 12px 25px;
+               border-radius: 8px;
+               text-decoration: none;
+               margin-top: 20px;
+               transition: all 0.3s ease;
+               font-weight: 500;
+          }
+
+          .tracking-button:hover {
+               background-color: #4a332f;
+               transform: translateY(-2px);
+               box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+          }
+
+          #checkoutForms {
+               transition: all 0.5s ease-in-out;
+          }
+
+          .fade-out {
+               opacity: 0;
+               transform: translateY(-20px);
+          }
+
+          /* Payment Details Sections */
+          .payment-details {
+               display: none;
+               margin-top: 20px;
+               padding: 25px;
+               background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+               border-radius: 12px;
+               border: 1px solid #dee2e6;
+               box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+          }
+
+          .payment-details.active {
+               display: block;
+               animation: slideIn 0.5s ease-out;
+          }
+
+          @keyframes slideIn {
+               from {
+                    opacity: 0;
+                    transform: translateY(-20px);
+               }
+
+               to {
+                    opacity: 1;
+                    transform: translateY(0);
+               }
+          }
+
+          .payment-details h3 {
+               color: #495057;
+               margin-bottom: 15px;
+               font-size: 18px;
+          }
+
+          /* PayPal Styles */
+          .paypal-container {
+               background-color: white;
+               padding: 20px;
+               border-radius: 8px;
+               border: 1px solid #ddd;
+               margin-top: 15px;
+          }
+
+          .paypal-button-container {
+               margin-top: 15px;
+               min-height: 50px;
+          }
+
+          .paypal-demo {
+               background: linear-gradient(135deg, #0070ba 0%, #003087 100%);
+               color: white;
+               padding: 15px 25px;
+               border: none;
+               border-radius: 8px;
+               cursor: pointer;
+               font-size: 16px;
+               font-weight: bold;
+               width: 100%;
+               margin: 10px 0;
+               transition: all 0.3s ease;
+          }
+
+          .paypal-demo:hover {
+               transform: translateY(-2px);
+               box-shadow: 0 6px 20px rgba(0, 112, 186, 0.3);
+          }
+
+          /* GCash Styles */
+          .gcash-details {
+               text-align: center;
+          }
+
+          .gcash-qr {
+               max-width: 220px;
+               margin: 20px auto;
+               padding: 15px;
+               background-color: white;
+               border-radius: 12px;
+               box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+          }
+
+          .gcash-qr img {
+               width: 100%;
+               height: auto;
+               border-radius: 8px;
+          }
+
+          .gcash-number {
+               font-weight: bold;
+               color: #004CFF;
+               font-size: 1.4em;
+               margin: 15px 0;
+               padding: 10px;
+               background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+               border-radius: 8px;
+               border: 2px solid #004CFF;
+          }
+
+          .gcash-instructions {
+               margin: 20px 0;
+               text-align: left;
+               padding: 20px;
+               background: linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%);
+               border-radius: 10px;
+               border-left: 5px solid #4caf50;
+          }
+
+          .gcash-instructions h4 {
+               color: #2e7d32;
+               margin-bottom: 15px;
+          }
+
+          .gcash-instructions ol {
+               margin-left: 20px;
+               padding-left: 0;
+          }
+
+          .gcash-instructions li {
+               margin-bottom: 10px;
+               line-height: 1.6;
+          }
+
+          .gcash-reference {
+               font-weight: bold;
+               color: #333;
+               background-color: #fff;
+               padding: 8px 15px;
+               border-radius: 6px;
+               border: 2px dashed #004CFF;
+               display: inline-block;
+               font-family: 'Courier New', monospace;
+               letter-spacing: 1px;
+          }
+
+          .payment-verification {
+               margin-top: 20px;
+               padding: 20px;
+               background-color: white;
+               border-radius: 10px;
+               border: 1px solid #ddd;
+               box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+          }
+
+          .payment-verification label {
+               font-weight: 600;
+               color: #495057;
+               margin-bottom: 8px;
+          }
+
+          .payment-verification input {
+               width: 100%;
+               padding: 12px;
+               margin-bottom: 15px;
+               border: 2px solid #ddd;
+               border-radius: 6px;
+               font-size: 16px;
+          }
+
+          .verify-button {
+               background: linear-gradient(135deg, #004CFF 0%, #0066FF 100%);
+               color: white;
+               padding: 12px 25px;
+               border: none;
+               border-radius: 8px;
+               cursor: pointer;
+               font-size: 14px;
+               font-weight: 600;
+               margin: 0;
+               min-width: auto;
+               transition: all 0.3s ease;
+          }
+
+          .verify-button:hover {
+               transform: translateY(-2px);
+               box-shadow: 0 6px 20px rgba(0, 76, 255, 0.3);
+          }
+
+          /* Loading Spinner */
+          .loading-spinner {
+               display: none;
+               text-align: center;
+               margin: 30px 0;
+               padding: 20px;
+               background-color: white;
+               border-radius: 12px;
+               box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+          }
+
+          .spinner {
+               border: 4px solid rgba(188, 159, 125, 0.2);
+               width: 50px;
+               height: 50px;
+               border-radius: 50%;
+               border-left-color: #bc9f7d;
+               animation: spin 1s linear infinite;
+               margin: 0 auto 15px;
+          }
+
+          @keyframes spin {
+               0% {
+                    transform: rotate(0deg);
+               }
+
+               100% {
+                    transform: rotate(360deg);
+               }
+          }
+
+          .loading-text {
+               color: #666;
+               font-size: 16px;
+               font-weight: 500;
+          }
+
+          /* Footer Styles */
+          .footer-container {
+               background-color: #bc9f7d;
+               padding: 0;
+               width: 100%;
+               margin-top: 50px;
+          }
+
+          .social-section {
+               text-align: center;
+               padding: 25px 0;
+          }
+
+          .social-title {
+               color: #fff;
+               font-weight: bold;
+               font-size: 1.2rem;
+               margin-bottom: 20px;
+          }
+
+          .social-icons {
+               display: flex;
+               justify-content: center;
+               gap: 20px;
+          }
+
+          .social-icon {
+               background-color: #fff;
+               color: #a27246;
+               width: 45px;
+               height: 45px;
+               border-radius: 50%;
+               display: flex;
+               align-items: center;
+               justify-content: center;
+               font-size: 1.4rem;
+               text-decoration: none;
+               transition: all 0.3s ease;
+          }
+
+          .social-icon:hover {
+               transform: translateY(-5px);
+               background-color: #f8f9fa;
+               color: #4a332f;
+               box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+          }
+
+          .main-footer {
+               background-color: #dfd8cd;
+               display: flex;
+               justify-content: space-between;
+               align-items: center;
+               padding: 25px 10%;
+               border-top: 1px solid #d0d6e0;
+          }
+
+          .company-info {
+               text-align: left;
+               color: #555;
+          }
+
+          .company-name {
+               font-weight: bold;
+               color: #4a332f;
+               font-size: 1.1rem;
+               margin-bottom: 8px;
+          }
+
+          .company-details {
+               color: #555;
+               font-size: 0.9rem;
+               margin: 4px 0;
+          }
+
+          .footer-links {
+               text-align: right;
+          }
+
+          .footer-link {
+               display: block;
+               color: #555;
+               text-decoration: none;
+               margin: 12px 0;
+               font-size: 0.9rem;
+               transition: all 0.3s ease;
+          }
+
+          .footer-link:hover {
+               color: #4a332f;
+               transform: translateX(-5px);
+          }
+
+          /* Responsive Design */
+          @media (max-width: 768px) {
+               .checkout-container {
+                    padding: 0 10px;
+               }
+
+               .checkout-tabs {
+                    flex-direction: column;
+                    align-items: stretch;
+               }
+
+               .checkout-tab {
+                    margin: 5px 0;
+                    border-radius: 8px;
+                    text-align: center;
+               }
+
+               .cart-item {
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 5px;
+               }
+
+               .payment-option {
+                    flex-direction: column;
+                    align-items: flex-start;
+                    text-align: center;
+               }
+
+               .payment-option-content {
+                    flex-direction: column;
+                    gap: 10px;
+                    width: 100%;
+               }
+
+               .payment-logo {
+                    margin-left: 0;
+               }
+
+               button {
+                    width: 100%;
+                    margin: 15px 0;
+               }
+
+               .main-footer {
+                    flex-direction: column;
+                    text-align: center;
+                    padding: 25px 20px;
+                    gap: 20px;
+               }
+
+               .footer-links {
+                    text-align: center;
+               }
+
+               .company-info {
+                    text-align: center;
+               }
+
+               .social-section {
+                    padding: 20px 15px;
+               }
+
+               .social-icons {
+                    flex-wrap: wrap;
+                    gap: 15px;
+               }
+
+               .gcash-instructions {
+                    padding: 15px;
+               }
+
+               .payment-details {
+                    padding: 20px;
+               }
+          }
+     </style>
+</head>
+
+<body>
+     <div class="checkout-container">
+          <h1><i class="fas fa-shopping-cart"></i> Checkout</h1>
+
+          <!-- Order Confirmation Section -->
+          <div id="orderConfirmation" class="checkout-section">
+               <div class="confirmation-icon">✓</div>
+               <h2>Order Confirmed!</h2>
+               <p>Thank you for your order. We're preparing it now!</p>
+               <p class="order-number">Order #: <span id="orderNumberDisplay">--</span></p>
+               <p>A confirmation has been sent to your email (if provided).</p>
+               <p>You can track your order status below:</p>
+               <a href="track-order.html" class="tracking-button" id="trackOrderBtn">
+                    <i class="fas fa-truck"></i> Track Your Order
+               </a>
+          </div>
+
+          <!-- Loading Spinner -->
+          <div class="loading-spinner" id="loadingSpinner">
+               <div class="spinner"></div>
+               <p class="loading-text">Processing your payment...</p>
+          </div>
+
+          <div id="checkoutForms">
+               <div class="checkout-tabs">
+                    <div class="checkout-tab active" onclick="showOrderType('pickup')">
+                         <i class="fas fa-store"></i> Self Pickup
+                    </div>
+                    <div class="checkout-tab" onclick="showOrderType('delivery')">
+                         <i class="fas fa-truck"></i> Delivery
+                    </div>
+               </div>
+
+               <div class="checkout-section">
+                    <h2><i class="fas fa-receipt"></i> Your Order</h2>
+                    <div class="cart-preview" id="cart-preview"></div>
+               </div>
+
+               <!-- Self Pickup Form -->
+               <div id="pickup-options" class="checkout-section">
+                    <h2><i class="fas fa-user"></i> Self Pickup Details</h2>
+                    <div class="form-group">
+                         <label for="pickup-name"><i class="fas fa-user"></i> Full Name *</label>
+                         <input type="text" id="pickup-name" required>
+                    </div>
+                    <div class="form-group">
+                         <label for="pickup-phone"><i class="fas fa-phone"></i> Phone Number (Optional)</label>
+                         <input type="tel" id="pickup-phone" placeholder="For order updates and notifications">
+                    </div>
+                    <div class="form-group">
+                         <label for="pickup-email"><i class="fas fa-envelope"></i> Email (Optional)</label>
+                         <input type="email" id="pickup-email" placeholder="For order confirmation">
+                    </div>
+                    <div class="form-group">
+                         <label for="pickup-time"><i class="fas fa-clock"></i> Preferred Pickup Time *</label>
+                         <input type="time" id="pickup-time" required>
+                    </div>
+                    <div class="form-group">
+                         <label><i class="fas fa-credit-card"></i> Payment Method *</label>
+                         <div class="payment-methods">
+                              <div class="payment-option" onclick="selectPayment('pickup', 'cash')">
+                                   <input type="radio" name="pickup-payment" value="Cash on Pickup" id="pickup-cash">
+                                   <div class="payment-option-content">
+                                        <span class="payment-option-text">Cash on Pickup</span>
+                                        <i class="fas fa-money-bill-wave" style="color: #28a745; font-size: 24px;"></i>
+                                   </div>
+                              </div>
+                              <div class="payment-option" onclick="selectPayment('pickup', 'paypal')">
+                                   <input type="radio" name="pickup-payment" value="PayPal" id="pickup-paypal">
+                                   <div class="payment-option-content">
+                                        <span class="payment-option-text">PayPal</span>
+                                        <img src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_37x23.jpg"
+                                             alt="PayPal" class="payment-logo">
+                                   </div>
+                              </div>
+                              <div class="payment-option" onclick="selectPayment('pickup', 'gcash')">
+                                   <input type="radio" name="pickup-payment" value="GCash" id="pickup-gcash">
+                                   <div class="payment-option-content">
+                                        <span class="payment-option-text">GCash</span>
+                                        <span class="gcash-logo">GCash</span>
+                                   </div>
+                              </div>
+                         </div>
+                         <div id="pickup-payment-error" class="error-message">Please select a payment method</div>
+                    </div>
+
+                    <!-- PayPal Payment Details -->
+                    <div id="pickup-paypal-details" class="payment-details">
+                         <h3><i class="fab fa-paypal"></i> Pay with PayPal</h3>
+                         <div class="paypal-container">
+                              <p>Click the PayPal button below to complete your payment securely.</p>
+                              <div id="pickup-paypal-button-container" class="paypal-button-container"></div>
+                              <button class="paypal-demo" onclick="simulatePayPalPayment('pickup')">
+                                   <i class="fab fa-paypal"></i> Pay with PayPal (Demo)
+                              </button>
+                              <small style="color: #666; display: block; margin-top: 10px;">
+                                   * This is a demo button. In production, replace with actual PayPal integration.
+                              </small>
+                         </div>
+                    </div>
+
+                    <!-- GCash Payment Details -->
+                    <div id="pickup-gcash-details" class="payment-details">
+                         <div class="gcash-details">
+                              <h3><i class="fas fa-mobile-alt"></i> Pay with GCash</h3>
+                              <p>Scan the QR code or send payment to the number below:</p>
+                              <div class="gcash-qr">
+                                   <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=09123456789"
+                                        alt="GCash QR Code">
+                              </div>
+                              <p class="gcash-number">📱 09568743962</p>
+                              <p><strong>Account Name:</strong> LOTUS COFFEE PH</p>
+
+                              <div class="gcash-instructions">
+                                   <h4><i class="fas fa-list-ol"></i> How to pay:</h4>
+                                   <ol>
+                                        <li>Open your GCash app</li>
+                                        <li>Tap on "Send Money"</li>
+                                        <li>Enter the number: <strong>09123456789</strong></li>
+                                        <li>Enter the amount: <span id="pickup-gcash-amount">₱0.00</span></li>
+                                        <li>Use this reference: <span class="gcash-reference"
+                                                  id="pickup-gcash-reference">--</span></li>
+                                        <li>Complete the payment in your GCash app</li>
+                                        <li>Enter the reference number below to verify</li>
+                                   </ol>
+                              </div>
+
+                              <div class="payment-verification">
+                                   <label for="pickup-gcash-verification">
+                                        <i class="fas fa-key"></i> Enter GCash Reference Number:
+                                   </label>
+                                   <input type="text" id="pickup-gcash-verification" placeholder="e.g., 1234567890">
+                                   <button type="button" class="verify-button" onclick="verifyGCashPayment('pickup')">
+                                        <i class="fas fa-check"></i> Verify Payment
+                                   </button>
+                              </div>
+                         </div>
+                    </div>
+               </div>
+
+               <!-- Delivery Form -->
+               <div id="delivery-options" class="checkout-section" style="display: none;">
+                    <h2><i class="fas fa-truck"></i> Delivery Details</h2>
+                    <div class="form-group">
+                         <label for="delivery-name"><i class="fas fa-user"></i> Full Name *</label>
+                         <input type="text" id="delivery-name" required>
+                    </div>
+                    <div class="form-group">
+                         <label for="delivery-phone"><i class="fas fa-phone"></i> Phone Number (Optional)</label>
+                         <input type="tel" id="delivery-phone" placeholder="For delivery coordination and updates">
+                    </div>
+                    <div class="form-group">
+                         <label for="delivery-email"><i class="fas fa-envelope"></i> Email (Optional)</label>
+                         <input type="email" id="delivery-email" placeholder="For order confirmation">
+                    </div>
+                    <div class="form-group">
+                         <label for="delivery-address"><i class="fas fa-map-marker-alt"></i> Delivery Address *</label>
+                         <textarea id="delivery-address" required
+                              placeholder="Enter your complete delivery address"></textarea>
+                    </div>
+                    <div class="form-group">
+                         <label for="delivery-instructions"><i class="fas fa-sticky-note"></i> Delivery Instructions
+                              (Optional)</label>
+                         <textarea id="delivery-instructions"
+                              placeholder="Building access code, landmarks, etc."></textarea>
+                    </div>
+                    <div class="shipping-fee">
+                         <p><i class="fas fa-shipping-fast"></i> <strong>Shipping Fee: ₱<span
+                                        id="shipping-fee">60.00</span></strong></p>
+                         <small>* Delivery available within 5km radius. Fee may vary based on distance.</small>
+                    </div>
+                    <div class="form-group">
+                         <label><i class="fas fa-credit-card"></i> Payment Method *</label>
+                         <div class="payment-methods">
+                              <div class="payment-option" onclick="selectPayment('delivery', 'cash')">
+                                   <input type="radio" name="delivery-payment" value="Cash on Delivery"
+                                        id="delivery-cash">
+                                   <div class="payment-option-content">
+                                        <span class="payment-option-text">Cash on Delivery</span>
+                                        <i class="fas fa-money-bill-wave" style="color: #28a745; font-size: 24px;"></i>
+                                   </div>
+                              </div>
+                              <div class="payment-option" onclick="selectPayment('delivery', 'paypal')">
+                                   <input type="radio" name="delivery-payment" value="PayPal" id="delivery-paypal">
+                                   <div class="payment-option-content">
+                                        <span class="payment-option-text">PayPal</span>
+                                        <img src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_37x23.jpg"
+                                             alt="PayPal" class="payment-logo">
+                                   </div>
+                              </div>
+                              <div class="payment-option" onclick="selectPayment('delivery', 'gcash')">
+                                   <input type="radio" name="delivery-payment" value="GCash" id="delivery-gcash">
+                                   <div class="payment-option-content">
+                                        <span class="payment-option-text">GCash</span>
+                                        <span class="gcash-logo">GCash</span>
+                                   </div>
+                              </div>
+                         </div>
+                         <div id="delivery-payment-error" class="error-message">Please select a payment method</div>
+                    </div>
+
+                    <!-- PayPal Payment Details -->
+                    <div id="delivery-paypal-details" class="payment-details">
+                         <h3><i class="fab fa-paypal"></i> Pay with PayPal</h3>
+                         <div class="paypal-container">
+                              <p>Click the PayPal button below to complete your payment securely.</p>
+                              <div id="delivery-paypal-button-container" class="paypal-button-container"></div>
+                              <button class="paypal-demo" onclick="simulatePayPalPayment('delivery')">
+                                   <i class="fab fa-paypal"></i> Pay with PayPal (Demo)
+                              </button>
+                              <small style="color: #666; display: block; margin-top: 10px;">
+                                   * This is a demo button. In production, replace with actual PayPal integration.
+                              </small>
+                         </div>
+                    </div>
+
+                    <!-- GCash Payment Details -->
+                    <div id="delivery-gcash-details" class="payment-details">
+                         <div class="gcash-details">
+                              <h3><i class="fas fa-mobile-alt"></i> Pay with GCash</h3>
+                              <p>Scan the QR code or send payment to the number below:</p>
+                              <div class="gcash-qr">
+                                   <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=09123456789"
+                                        alt="GCash QR Code">
+                              </div>
+                              <p class="gcash-number">📱 09123456789</p>
+                              <p><strong>Account Name:</strong> LOTUS COFFEE PH</p>
+
+                              <div class="gcash-instructions">
+                                   <h4><i class="fas fa-list-ol"></i> How to pay:</h4>
+                                   <ol>
+                                        <li>Open your GCash app</li>
+                                        <li>Tap on "Send Money"</li>
+                                        <li>Enter the number: <strong>09123456789</strong></li>
+                                        <li>Enter the amount: <span id="delivery-gcash-amount">₱0.00</span></li>
+                                        <li>Use this reference: <span class="gcash-reference"
+                                                  id="delivery-gcash-reference">--</span></li>
+                                        <li>Complete the payment in your GCash app</li>
+                                        <li>Enter the reference number below to verify</li>
+                                   </ol>
+                              </div>
+
+                              <div class="payment-verification">
+                                   <label for="delivery-gcash-verification">
+                                        <i class="fas fa-key"></i> Enter GCash Reference Number:
+                                   </label>
+                                   <input type="text" id="delivery-gcash-verification" placeholder="e.g., 1234567890">
+                                   <button type="button" class="verify-button" onclick="verifyGCashPayment('delivery')">
+                                        <i class="fas fa-check"></i> Verify Payment
+                                   </button>
+                              </div>
+                         </div>
+                    </div>
+               </div>
+
+               <button id="confirmOrderBtn">
+                    <i class="fas fa-check-circle"></i> Confirm Order
+               </button>
+               <a href="javascript:history.back()" class="back-link">
+                    <i class="fas fa-arrow-left"></i> Back to Cart
+               </a>
+          </div>
+     </div>
+
+     <div class="footer-container">
+          <div class="social-section">
+               <h3 class="social-title">Follow us on</h3>
+               <div class="social-icons">
+                    <a href="https://www.instagram.com/lotuscoffee.ph?igsh=ZzB4ZWxzY2M1MjRr" class="social-icon">
+                         <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.facebook.com/profile.php?id=61576273525574" class="social-icon">
+                         <i class="fab fa-facebook"></i>
+                    </a>
+               </div>
+          </div>
+
+          <div class="main-footer">
+               <div class="company-info">
+                    <div class="company-name">LOTUS COFFEE PHILIPPINES INC.</div>
+                    <div class="company-details">Company registration no: 635-381-780-00000</div>
+                    <div class="company-details">Recto, Manila</div>
+                    <div class="company-details">Email: lotusbrewcafe@gmail.com</div>
+                    <div class="company-details">COPYRIGHT 2025 © LOTUS COFFEE</div>
+               </div>
+               <div class="footer-links">
+                    <a href="terms.html" class="footer-link">Privacy Policy</a>
+                    <a href="terms.html" class="footer-link">Terms & Conditions</a>
+                    <a href="terms.html" class="footer-link">Customer Support</a>
+                    <a href="return.html" class="footer-link">Refund Policy</a>
+                    <a href="faq.html" class="footer-link">FAQS</a>
+               </div>
+          </div>
+     </div>
+
+     <script>
+          // Global variables
+          const cart = JSON.parse(localStorage.getItem('cart')) || [];
+          const preview = document.getElementById('cart-preview');
+          const shippingFee = 60.0;
+          let subtotal = 0;
+          let currentOrderType = 'pickup';
+          let paymentProcessed = false;
+          let selectedPaymentMethod = null;
+
+          // Initialize cart display
+          function renderCart() {
+               if (cart.length === 0) {
+                    preview.innerHTML = `
+                         <div style="text-align: center; padding: 20px; color: #666;">
+                              <i class="fas fa-shopping-cart" style="font-size: 48px; margin-bottom: 10px; opacity: 0.5;"></i>
+                              <p>Your cart is empty.</p>
+                              <a href="menu.html" style="color: #bc9f7d; text-decoration: none;">
+                                   <i class="fas fa-arrow-left"></i> Continue Shopping
+                              </a>
+                         </div>
+                    `;
+                    document.getElementById('confirmOrderBtn').disabled = true;
+                    return;
+               }
+
+               preview.innerHTML = '';
+               const headerRow = document.createElement('div');
+               headerRow.className = 'cart-item';
+               headerRow.innerHTML = `<strong><i class="fas fa-coffee"></i> Item</strong><strong><i class="fas fa-peso-sign"></i> Price</strong>`;
+               preview.appendChild(headerRow);
+
+               subtotal = 0;
+
+               cart.forEach(item => {
+                    const price = parseFloat(item.price.replace(/[^\d.-]/g, '')) || 0;
+                    const quantity = item.quantity || 1;
+                    const total = price * quantity;
+                    subtotal += total;
+
+                    const row = document.createElement('div');
+                    row.className = 'cart-item';
+                    row.innerHTML = `
+                         <span>${item.name} × ${quantity}</span>
+                         <span>₱${total.toFixed(2)}</span>
+                    `;
+                    preview.appendChild(row);
+               });
+
+               updateTotal();
+               updateGCashAmounts();
+               document.getElementById('confirmOrderBtn').disabled = false;
+          }
+
+          function updateTotal() {
+               const oldTotal = document.querySelector('.total');
+               if (oldTotal) oldTotal.remove();
+
+               let total = subtotal;
+               if (currentOrderType === 'delivery') {
+                    total += shippingFee;
+               }
+
+               const totalEl = document.createElement('p');
+               totalEl.className = 'total';
+               totalEl.innerHTML = currentOrderType === 'delivery'
+                    ? `<i class="fas fa-calculator"></i> Total (with ₱${shippingFee.toFixed(2)} shipping): <strong>₱${total.toFixed(2)}</strong>`
+                    : `<i class="fas fa-calculator"></i> Total: <strong>₱${total.toFixed(2)}</strong>`;
+               preview.appendChild(totalEl);
+          }
+
+          function showOrderType(type) {
+               currentOrderType = type;
+
+               // Update tab appearance
+               document.querySelectorAll('.checkout-tab').forEach(tab => tab.classList.remove('active'));
+               document.querySelector(`.checkout-tab:nth-child(${type === 'pickup' ? 1 : 2})`).classList.add('active');
+
+               // Show/hide sections
+               document.getElementById('pickup-options').style.display = type === 'pickup' ? 'block' : 'none';
+               document.getElementById('delivery-options').style.display = type === 'delivery' ? 'block' : 'none';
+
+               // Reset payment selection
+               resetPaymentSelection();
+               updateTotal();
+               updateGCashAmounts();
+          }
+
+          function resetPaymentSelection() {
+               selectedPaymentMethod = null;
+               paymentProcessed = false;
+
+               // Hide all payment details
+               document.querySelectorAll('.payment-details').forEach(detail => {
+                    detail.classList.remove('active');
+               });
+
+               // Remove selection styling
+               document.querySelectorAll('.payment-option').forEach(option => {
+                    option.classList.remove('selected');
+               });
+
+               // Uncheck all radio buttons
+               document.querySelectorAll('input[type="radio"]').forEach(input => {
+                    input.checked = false;
+               });
+
+               // Hide error messages
+               document.querySelectorAll('.error-message').forEach(error => {
+                    error.style.display = 'none';
+               });
+          }
+
+          function selectPayment(orderType, paymentMethod) {
+               // Remove previous selections
+               document.querySelectorAll('.payment-option').forEach(option => {
+                    option.classList.remove('selected');
+               });
+
+               // Hide all payment details
+               document.querySelectorAll('.payment-details').forEach(detail => {
+                    detail.classList.remove('active');
+               });
+
+               // Select the clicked option
+               event.currentTarget.classList.add('selected');
+               const radioInput = event.currentTarget.querySelector('input[type="radio"]');
+               radioInput.checked = true;
+
+               selectedPaymentMethod = paymentMethod;
+               paymentProcessed = paymentMethod === 'cash'; // Cash is immediately "processed"
+
+               // Show payment details if needed
+               if (paymentMethod !== 'cash') {
+                    const paymentDetails = document.getElementById(`${orderType}-${paymentMethod}-details`);
+                    if (paymentDetails) {
+                         paymentDetails.classList.add('active');
+                    }
+
+                    // Generate GCash reference if needed
+                    if (paymentMethod === 'gcash') {
+                         const reference = generateGCashReference();
+                         document.getElementById(`${orderType}-gcash-reference`).textContent = reference;
+                    }
+               }
+
+               // Hide error message
+               document.getElementById(`${orderType}-payment-error`).style.display = 'none';
+          }
+
+          function simulatePayPalPayment(orderType) {
+               showLoadingSpinner('Processing PayPal payment...');
+
+               setTimeout(() => {
+                    hideLoadingSpinner();
+                    paymentProcessed = true;
+
+                    // Show success message
+                    alert('PayPal payment successful! You can now confirm your order.');
+
+                    // Add visual feedback
+                    const paypalDetails = document.getElementById(`${orderType}-paypal-details`);
+                    paypalDetails.style.background = 'linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%)';
+                    paypalDetails.style.border = '2px solid #28a745';
+
+                    const successMsg = document.createElement('div');
+                    successMsg.innerHTML = `
+                         <div style="background: #28a745; color: white; padding: 10px; border-radius: 5px; margin-top: 10px; text-align: center;">
+                              <i class="fas fa-check-circle"></i> Payment Successful!
+                         </div>
+                    `;
+                    paypalDetails.appendChild(successMsg);
+               }, 2000);
+          }
+
+          function verifyGCashPayment(orderType) {
+               const referenceInput = document.getElementById(`${orderType}-gcash-verification`);
+               const reference = referenceInput.value.trim();
+
+               if (!reference) {
+                    alert('Please enter the GCash reference number');
+                    referenceInput.focus();
+                    return;
+               }
+
+               if (reference.length < 8) {
+                    alert('Please enter a valid reference number (at least 8 characters)');
+                    referenceInput.focus();
+                    return;
+               }
+
+               showLoadingSpinner('Verifying GCash payment...');
+
+               // Simulate payment verification
+               setTimeout(() => {
+                    hideLoadingSpinner();
+                    paymentProcessed = true;
+
+                    // Show success message
+                    alert('GCash payment verified successfully! You can now confirm your order.');
+
+                    // Add visual feedback
+                    const gcashDetails = document.getElementById(`${orderType}-gcash-details`);
+                    const verification = gcashDetails.querySelector('.payment-verification');
+                    verification.style.background = 'linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%)';
+                    verification.style.border = '2px solid #28a745';
+
+                    const successMsg = document.createElement('div');
+                    successMsg.innerHTML = `
+                         <div style="background: #28a745; color: white; padding: 10px; border-radius: 5px; margin-top: 10px; text-align: center;">
+                              <i class="fas fa-check-circle"></i> Payment Verified!
+                         </div>
+                    `;
+                    verification.appendChild(successMsg);
+
+                    // Disable input and button
+                    referenceInput.disabled = true;
+                    verification.querySelector('.verify-button').disabled = true;
+               }, 2000);
+          }
+
+          function showLoadingSpinner(message = 'Processing...') {
+               const spinner = document.getElementById('loadingSpinner');
+               const loadingText = spinner.querySelector('.loading-text');
+               loadingText.textContent = message;
+               spinner.style.display = 'block';
+
+               // Scroll to spinner
+               spinner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+
+          function hideLoadingSpinner() {
+               document.getElementById('loadingSpinner').style.display = 'none';
+          }
+
+          function validateFields(fields) {
+               return fields.every(id => {
+                    const field = document.getElementById(id);
+                    const value = field.value.trim();
+
+                    if (!value) {
+                         field.style.borderColor = '#dc3545';
+                         field.focus();
+                         return false;
+                    } else {
+                         field.style.borderColor = '#28a745';
+                         return true;
+                    }
+               });
+          }
+
+          function generateOrderNumber() {
+               const date = new Date();
+               const year = date.getFullYear().toString().substr(-2);
+               const month = (date.getMonth() + 1).toString().padStart(2, '0');
+               const day = date.getDate().toString().padStart(2, '0');
+               const random = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+               return `LB-${year}${month}${day}-${random}`;
+          }
+
+          function generateGCashReference() {
+               const prefix = "GC";
+               const timestamp = Date.now().toString().slice(-6);
+               const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+               return `${prefix}${timestamp}${random}`;
+          }
+
+          function updateGCashAmounts() {
+               let pickupTotal = subtotal;
+               let deliveryTotal = subtotal + shippingFee;
+
+               const pickupAmount = document.getElementById('pickup-gcash-amount');
+               const deliveryAmount = document.getElementById('delivery-gcash-amount');
+
+               if (pickupAmount) pickupAmount.textContent = `₱${pickupTotal.toFixed(2)}`;
+               if (deliveryAmount) deliveryAmount.textContent = `₱${deliveryTotal.toFixed(2)}`;
+          }
+
+          function showOrderConfirmation(orderNumber) {
+               document.getElementById('orderNumberDisplay').textContent = orderNumber;
+               hideLoadingSpinner();
+
+               const checkoutForms = document.getElementById('checkoutForms');
+               checkoutForms.classList.add('fade-out');
+
+               setTimeout(() => {
+                    checkoutForms.style.display = 'none';
+                    const confirmation = document.getElementById('orderConfirmation');
+                    confirmation.style.display = 'block';
+                    confirmation.scrollIntoView({ behavior: 'smooth', block: 'start' });
+               }, 500);
+
+               document.getElementById('trackOrderBtn').href = `track-order.html?order=${orderNumber}`;
+               localStorage.setItem('currentOrderNumber', orderNumber);
+               localStorage.removeItem('cart');
+          }
+
+          function processOrder(orderType) {
+               const orderNumber = generateOrderNumber();
+               let order;
+
+               if (orderType === 'pickup') {
+                    order = {
+                         orderNumber: orderNumber,
+                         type: 'pickup',
+                         name: document.getElementById('pickup-name').value.trim(),
+                         phone: document.getElementById('pickup-phone').value.trim(),
+                         email: document.getElementById('pickup-email').value.trim(),
+                         pickupTime: document.getElementById('pickup-time').value.trim(),
+                         paymentMethod: document.querySelector('input[name="pickup-payment"]:checked').value,
+                         paymentStatus: paymentProcessed ? 'paid' : 'pending',
+                         items: cart,
+                         subtotal: subtotal,
+                         total: subtotal,
+                         orderDate: new Date().toISOString(),
+                         status: 'confirmed'
+                    };
+               } else {
+                    order = {
+                         orderNumber: orderNumber,
+                         type: 'delivery',
+                         name: document.getElementById('delivery-name').value.trim(),
+                         phone: document.getElementById('delivery-phone').value.trim(),
+                         email: document.getElementById('delivery-email').value.trim(),
+                         address: document.getElementById('delivery-address').value.trim(),
+                         instructions: document.getElementById('delivery-instructions').value.trim(),
+                         paymentMethod: document.querySelector('input[name="delivery-payment"]:checked').value,
+                         paymentStatus: paymentProcessed ? 'paid' : 'pending',
+                         items: cart,
+                         subtotal: subtotal,
+                         shippingFee: shippingFee,
+                         total: subtotal + shippingFee,
+                         orderDate: new Date().toISOString(),
+                         status: 'confirmed'
+                    };
+               }
+
+               localStorage.setItem('orderDetails', JSON.stringify(order));
+               showOrderConfirmation(orderNumber);
+          }
+
+          // Event Listeners
+          document.getElementById('confirmOrderBtn').addEventListener('click', () => {
+               let isValid = true;
+
+               if (currentOrderType === 'pickup') {
+                    const payment = document.querySelector('input[name="pickup-payment"]:checked');
+                    if (!payment) {
+                         document.getElementById('pickup-payment-error').style.display = 'block';
+                         isValid = false;
+                    }
+
+                    if (!validateFields(['pickup-name', 'pickup-time'])) {
+                         isValid = false;
+                    }
+
+                    if (isValid) {
+                         const paymentMethod = payment.value;
+
+                         if (paymentMethod === 'Cash on Pickup') {
+                              showLoadingSpinner('Processing your order...');
+                              setTimeout(() => processOrder('pickup'), 1000);
+                         } else if (paymentMethod === 'GCash' || paymentMethod === 'PayPal') {
+                              if (!paymentProcessed) {
+                                   alert('Please complete your payment before confirming the order');
+                                   return;
+                              }
+                              showLoadingSpinner('Processing your order...');
+                              setTimeout(() => processOrder('pickup'), 1000);
+                         }
+                    }
+               } else {
+                    const payment = document.querySelector('input[name="delivery-payment"]:checked');
+                    if (!payment) {
+                         document.getElementById('delivery-payment-error').style.display = 'block';
+                         isValid = false;
+                    }
+
+                    if (!validateFields(['delivery-name', 'delivery-address'])) {
+                         isValid = false;
+                    }
+
+                    if (isValid) {
+                         const paymentMethod = payment.value;
+
+                         if (paymentMethod === 'Cash on Delivery') {
+                              showLoadingSpinner('Processing your order...');
+                              setTimeout(() => processOrder('delivery'), 1000);
+                         } else if (paymentMethod === 'GCash' || paymentMethod === 'PayPal') {
+                              if (!paymentProcessed) {
+                                   alert('Please complete your payment before confirming the order');
+                                   return;
+                              }
+                              showLoadingSpinner('Processing your order...');
+                              setTimeout(() => processOrder('delivery'), 1000);
+                         }
+                    }
+               }
+          });
+
+          // Initialize the page
+          window.addEventListener('load', () => {
+               renderCart();
+
+               // Add some sample cart items if cart is empty (for demo purposes)
+               if (cart.length === 0) {
+                    const sampleItems = [
+                         { name: 'Americano', price: '₱120.00', quantity: 2 },
+                         { name: 'Cappuccino', price: '₱150.00', quantity: 1 },
+                         { name: 'Blueberry Muffin', price: '₱85.00', quantity: 1 }
+                    ];
+
+                    localStorage.setItem('cart', JSON.stringify(sampleItems));
+                    location.reload();
+               }
+          });
+
+          // Add smooth scrolling for better UX
+          document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+               anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                         target.scrollIntoView({
+                              behavior: 'smooth',
+                              block: 'start'
+                         });
+                    }
+               });
+          });
+     </script>
+</body>
+
+</html>
